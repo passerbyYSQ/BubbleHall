@@ -1,5 +1,5 @@
 package com.tedu.manager;
 
-public class GameElement {
+public enum GameElement {
 
 }
