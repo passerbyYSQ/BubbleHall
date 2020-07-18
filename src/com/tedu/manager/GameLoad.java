@@ -36,12 +36,13 @@ public class GameLoad {
 	 * @param mapId 文件编号 文件id
 	 */
 	public static void MapLoad(int mapId) {
+		loadObj();
 //		得到啦我们的文件路径
-		String mapName = "com/tedu/text/" + mapId + ".map";
+		String mapName="com/tedu/text/"+mapId+".map";
 //		使用io流来获取文件对象   得到类加载器
 		ClassLoader classLoader = GameLoad.class.getClassLoader();
 		InputStream maps = classLoader.getResourceAsStream(mapName);
-		if (maps == null) {
+		if(maps ==null) {
 			System.out.println("配置文件读取异常,请重新安装");
 			return;
 		}
@@ -52,19 +53,17 @@ public class GameLoad {
 //			可以直接动态的获取所有的key，有key就可以获取 value
 //			java学习中最好的老师 是 java的API文档。
 			Enumeration<?> names = pro.propertyNames();
-			while (names.hasMoreElements()) {// 获取是无序的
+			while(names.hasMoreElements()) {//获取是无序的
 //				这样的迭代都有一个问题：一次迭代一个元素。
-				String key = names.nextElement().toString();
-				System.out.println(pro.getProperty(key));
+				String key=names.nextElement().toString();
 //				就可以自动的创建和加载 我们的地图啦 
-				String[] arrs = pro.getProperty(key).split(";");
-				for (int i = 0; i < arrs.length; i++) {
-					ElementObj obj = getObj("map");
-					ElementObj element = obj.createElement(key + "," + arrs[i]);
-					System.out.println(element);
+				String [] arrs=pro.getProperty(key).split(";");
+				for(int i=0;i<arrs.length;i++) {
+					ElementObj obj= getObj("Map");  					
+					ElementObj element = obj.createElement(key+","+arrs[i]);
 					em.addElement(element, GameElement.MAPS);
 				}
-			}
+			}	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

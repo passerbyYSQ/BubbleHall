@@ -14,9 +14,12 @@ import com.tedu.manager.GameLoad;
  * @说明 地图类
  * @author ligouzi
  * @说明 map(num).pro里的坐标分别代表起点x，起点y，图片宽度，图片长度
+ * @说明 (num).map里数值代表x、y轴，x、y轴用逗号(,)分开，每一对坐标用分号(;)分开
  */
 public class Map extends ElementObj{
 
+	private int hp;     //墙的血量
+	private String name = null; //图片的名称，用于检测是否需要碰撞或者可否被摧毁
 	private int sx = 0; //图片分割的起点x轴
 	private int sy = 0; //图片分割的起点y轴	
 	private int dx = 0; //图片分割的终点x轴
@@ -36,22 +39,23 @@ public class Map extends ElementObj{
 	@Override
 	public ElementObj createElement(String str) {
 		String[] split = str.split(",");
+		this.name = split[0];
 		ImageIcon icon = null;
 		if(setimage(split[0],"map1") != null) {
+			//这里是两张图的需要，分别对应GameData.pro里的map1和map2
 			if(split[0].equals("tree") || split[0].equals("yellowhouse") || split[0].equals("bluehouse")) {
 				String img = setimage(split[0],"map2");
 				icon = new ImageIcon(img);
 			}
 			else {
 				String img = setimage(split[0],"map1");
-				System.out.println(split[0]);
 				icon = new ImageIcon(img);
 			}			 
 		}else {
 			System.out.println("生成图片失败");
 		}		
-		this.setX(Integer.parseInt(split[1]));
-		this.setY(Integer.parseInt(split[2]));
+		this.setX(Integer.parseInt(split[1])*48);
+		this.setY(Integer.parseInt(split[2])*48);
 		this.setIcon(icon);
 		return this;
 	}
