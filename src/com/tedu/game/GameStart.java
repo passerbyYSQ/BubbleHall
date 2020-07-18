@@ -24,7 +24,8 @@ public class GameStart {
 		gj.setjPanel(jp);
 		gj.setKeyListener(listener);
 		gj.setThread(th);
-
+		
+		
 		gj.start();
 
 	}

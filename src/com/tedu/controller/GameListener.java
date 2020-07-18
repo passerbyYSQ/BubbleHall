@@ -36,7 +36,7 @@ public class GameListener implements KeyListener {
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//System.out.println("keyPressed: " + e.getKeyCode());
+//		System.out.println("keyPressed: " + e.getKeyCode());
 		int key = e.getKeyCode();
 		if (set.contains(key)) {
 			// 防止按住一个方向键不放，连续多次修改状态
@@ -46,7 +46,7 @@ public class GameListener implements KeyListener {
 		set.add(key);
 		
 		// 拿到玩家集合
-		List<ElementObj> playList = em.getElementsByKey(GameElement.PLAY);
+		List<ElementObj> playList = em.getElementsByKey(GameElement.PLAYER);
 		for (ElementObj obj : playList) {
 			obj.keyClick(true, key);
 		}
@@ -62,7 +62,7 @@ public class GameListener implements KeyListener {
 		}
 		set.remove(key);
 		
-		List<ElementObj> playList = em.getElementsByKey(GameElement.PLAY);
+		List<ElementObj> playList = em.getElementsByKey(GameElement.PLAYER);
 		for (ElementObj obj : playList) {
 			obj.keyClick(false, key);
 		}

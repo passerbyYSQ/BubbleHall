@@ -24,7 +24,12 @@ public abstract class ElementObj {
 	private int w;
 	private int h;
 	private ImageIcon icon;
-	private boolean live;
+	
+	/**
+	 * 是否存货。true：存货；false：消亡
+	 * 元素的初始值应该是true，否则再判断时不会显示出来
+	 */
+	private boolean live = true;
 	
 	//不含参构造函数
 	public ElementObj() {}		
@@ -37,12 +42,12 @@ public abstract class ElementObj {
 	
 	/**
 	 * @说明 使用接口的方式，使用接口方式需要在监听类进行类型转换
-	 * 
+	 * 具体子类的工厂方法
 	 * @return
 	 */
 	public ElementObj createElement(String str)
 	{
-		return null;
+		return this;
 	}
 	
 	/**
@@ -51,7 +56,7 @@ public abstract class ElementObj {
 	 * @param 	bl	点击的类型是一个bool值，true代表按下，false代表松开
 	 * @param 	key	代表触发键盘的code值
 	 */
-	public void keyClick(boolean bl,int key)
+	public void keyClick(boolean isPressed, int key)
 	{
 		
 	}
@@ -71,12 +76,12 @@ public abstract class ElementObj {
 	 * 由于泡泡有个数限制,所以不需要间隔时间
 	 * 但是在其中需要添加泡泡个数判定
 	 */
-	private void add() {}
+	protected void add() {}
 	
 	/**
 	 * 更新图片的父类方法
 	 */
-	private void updateImage(long gameTime) {}
+	protected void updateImage(long gameTime) {}
 	
 	/**
 	 * 移动的父类方法
