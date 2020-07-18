@@ -1,0 +1,2 @@
+player1=image/Characters/Done_body16001_walk.png
+player2=image/Characters/Done_body51001_walk.png

@@ -18,8 +18,14 @@ import javax.swing.JPanel;
  * @create 2020年7月13日 下午2:48:25
  */
 public class GameJFrame extends JFrame {
+	
+	/**
+	 * 单个箱子像素：48*48
+	 * 计划放置格子：15*13
+	 * 地图大小：720*624（跟窗体大小有偏差）
+	 */
 	public static int GameX = 900;
-	public static int GameY = 600;
+	public static int GameY = 624;
 
 	// 当前正在显示的面板
 	private JPanel jPanel = null; 

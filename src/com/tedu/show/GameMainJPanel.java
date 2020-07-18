@@ -1,8 +1,10 @@
 package com.tedu.show;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,12 +34,13 @@ public class GameMainJPanel extends JPanel implements Runnable {
 	
 	public GameMainJPanel() {
 		init();
-
+		
 	}
 	
 	protected void init() {
 		// 得到元素管理器的单例
 		em = ElementManager.getManager();
+		
 	}
 	
 	// 重写绘画方法
