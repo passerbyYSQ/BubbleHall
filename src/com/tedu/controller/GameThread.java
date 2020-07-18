@@ -60,10 +60,11 @@ public class GameThread extends Thread {
 	 */
 	private void gameLoad() {
 //		System.out.println("gameLoad");
+		// 加载地图，10 可以设置成变量，切换关卡
+		GameLoad.MapLoad(1);  
 		// 加载图片到集合
 		GameLoad.loadImg();	
-		// 加载地图，10 可以设置成变量，切换关卡
-		//GameLoad.mapLoad(10);  
+		
 		// 加载玩家。可以传参，单人或双人
 		//GameLoad.loadPlay();;
 		
