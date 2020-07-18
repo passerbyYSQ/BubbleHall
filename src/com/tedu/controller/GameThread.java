@@ -99,7 +99,7 @@ public class GameThread extends Thread {
 			
 			moveAndUpdate(all, gameTime);
 			
-//			elementsCollide(GameElement.PLAYFILE, GameElement.ENEMY);
+			elementsCollide(GameElement.PLAYER, GameElement.TOOL);
 //			elementsCollide(GameElement.PLAYFILE, GameElement.MAPS);
 			
 			gameTime++;
@@ -114,7 +114,21 @@ public class GameThread extends Thread {
 	public void elementsCollide(GameElement eleA, GameElement eleB) {
 		List<ElementObj> listA = em.getElementsByKey(eleA);
 		List<ElementObj> listB = em.getElementsByKey(eleB);
-		
+		if(eleA==GameElement.PLAYER&&eleB==GameElement.TOOL)
+		{
+			for(ElementObj g1:listA)
+			{
+				for(ElementObj g2:listB)
+				{
+					if(g1.collide(g2))
+					{
+						g2.setLive(false);
+						g2.die();
+						return ;
+					}
+				}
+			}
+		}
 		for (ElementObj a : listA) {
 			for (ElementObj b : listB) {
 				if (a.collide(b)) {
