@@ -60,9 +60,12 @@ public class GameThread extends Thread {
 	 */
 	private void gameLoad() {
 //		System.out.println("gameLoad");
+		// 加载地图，10 可以设置成变量，切换关卡
+		GameLoad.MapLoad(1);  
 		// 加载图片到集合
 		GameLoad.loadImg();	
 		
+
 		/*
 		 * 加载玩家。可以考虑传参，来控制单人或双人
 		 * 示例："100,100,player";
@@ -72,10 +75,6 @@ public class GameThread extends Thread {
 		 */
 		GameLoad.loadPlayer("0,0,player1,37,38,39,40,17",
 				"48,48,player2,65,87,68,83,32");
-		
-		// 加载地图，10 可以设置成变量，切换关卡
-		//GameLoad.mapLoad(10);  
-		
 		
 		// 加载NPC...
 		
@@ -162,4 +161,30 @@ public class GameThread extends Thread {
 	private void gameOver() {
 	
 	}
+	
+	/*
+	protected void load() {
+		ImageIcon icon = new ImageIcon("image/tank/play1/player1_up.png");
+		ElementObj obj = new Play(100, 100, 50, 50, icon);
+		em.addElement(GameElement.PLAY, obj);
+		
+		// 添加敌人
+		for (int i = 0; i < 10; i++) {
+			em.addElement(GameElement.ENEMY, new Enemy().createElement(""));
+		}
+		
+		// 注意：只讲子弹的发射和死亡。思考：道具的掉落是否与子弹的发射相近？
+		
+		// 添加一个敌人类，仿照玩家类编写，注意不需要实现键盘监听
+		// 实现敌人的显示，同时实现最简单的移动。
+		// 例如：在(100, 100)和(500, 100)之间来回移动
+		
+//		obj = new Play(0, 0, 300, 300, icon);
+//		em.addElement(GameElement.MAPS, obj);
+//		
+//		obj = new Play(200, 200, 50, 50, icon);
+//		em.addElement(GameElement.ENEMY, obj);
+		
+	}
+	*/
 }

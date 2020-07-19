@@ -24,6 +24,8 @@ public abstract class ElementObj {
 	private int w;
 	private int h;
 	private ImageIcon icon;
+	private int HP=1;
+	private int bubbleNum;
 	
 	/**
 	 * 是否存货。true：存货；false：消亡
@@ -163,6 +165,22 @@ public abstract class ElementObj {
 
 	public void setLive(boolean live) {
 		this.live = live;
+	}
+
+	public int getHP() {
+		return HP;
+	}
+
+	public void setHP(int hP) {
+		HP = hP;
+	}
+
+	public int getBubbleNum() {
+		return bubbleNum;
+	}
+
+	public void setBubbleNum(int bubbleNum) {
+		this.bubbleNum = bubbleNum;
 	}
 	
 	
