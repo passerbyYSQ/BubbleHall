@@ -115,9 +115,18 @@ public class Player extends ElementObj {
 			}
 		}
 	}
-	
+	int correctedX=-1;
+	int correctedY=-1;
 	@Override
 	protected void move() {
+//		System.out.println(this.isPressed);
+//		if (correctedX!=-1 && correctedY!=-1)
+//		System.out.println("correctedX=" + correctedX + ";correctedY=" + correctedY);
+		
+		// 位置纠正。当方向键松开时，一定确保Player“顺滑”至下一格
+		// 谜之代码，不要看，没有任何参考意义
+		correctPosition2();
+		
 		// 左
 		if (dirFlag[0] && this.getX() > 0) {
 			this.setX(this.getX() - moveSpeed);
@@ -126,11 +135,12 @@ public class Player extends ElementObj {
 		// 上
 		if (dirFlag[1] && this.getY() > 0) {
 			this.setY(this.getY() - moveSpeed);
+			
 		}
 		
 		// 地图大小：720*624
 		// 最后需要将面板大小精准控制为地图大小
-		// 上
+		// 右
 		if (dirFlag[2] && this.getX() < GameStart.jp.getWidth() - 48) {
 			this.setX(this.getX() + moveSpeed);
 		}
@@ -139,6 +149,46 @@ public class Player extends ElementObj {
 		if (dirFlag[3] && this.getY() < GameStart.jp.getHeight() - 48 - 4) {
 			// 减4是为了修正误差，误差原因未知
 			this.setY(this.getY() + moveSpeed);
+		}
+	}
+	
+	private void correctPosition2() {
+		if (!isPressed) {
+			if (curDir == 0 || curDir == 2) {
+				if (correctedX != -1 && Math.abs(correctedX-this.getX()) < moveSpeed) {
+					this.setX(correctedX);
+					correctedX = -1;
+					for (int i = 0; i < dirFlag.length; i++) {
+						dirFlag[i] = false;
+					}
+				}
+				
+				if (this.getX() % 48 != 0) {
+					dirFlag[curDir] = true;
+					if (curDir == 0) {
+						correctedX = this.getX()/48*48;
+					} else if (curDir == 2) {
+						correctedX = (this.getX()/48+1)*48;
+					}
+				} 
+			}
+			
+			if (curDir == 1 || curDir == 3) {
+				if (correctedY != -1 && Math.abs(correctedY-this.getY()) < moveSpeed) {
+					this.setY(correctedY);
+					correctedY = -1;
+					dirFlag[curDir] = false;
+				}
+				
+				if (this.getY() % 48 != 0) {
+					dirFlag[curDir] = true;
+					if (curDir == 1) {
+						correctedY = this.getY()/48*48;
+					} else if (curDir == 3) {
+						correctedY = (this.getY()/48+1)*48;
+					}
+				}
+			}
 		}
 	}
 	
@@ -163,8 +213,17 @@ public class Player extends ElementObj {
 		}
 	}
 	
+	private boolean isPressed = false;
+	
 	@Override
 	public void keyClick(boolean isPressed, int key) {
+		this.isPressed = isPressed;
+		
+//		System.out.println("correctedX=" + correctedX + ";correctedY=" + correctedY);
+//		if ((correctedX == -1 && correctedY != -1)
+//				|| (correctedY == -1 && correctedX != -1)) {
+//			return;
+//		}
 		/*
 		 * key
 		 * player1：37：左	38：上	39：右	40：下	17：ctrl
@@ -190,10 +249,8 @@ public class Player extends ElementObj {
 				this.pkType = true; // 开启攻击状态
 			}
 		} else { // 松开
-
 			// 修正Player的坐标，使Player停下的那一刻，必定在48*48的一格中
-			correctPosition(this.getX(), this.getY());
-			
+			//correctPosition(this.getX(), this.getY());
 			if (key == keys[0]) {
 				dirFlag[0] = false;
 			} else if (key == keys[1]) {

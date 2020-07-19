@@ -70,8 +70,8 @@ public class GameThread extends Thread {
 		 * 初始x的坐标，初始y的坐标，图片的key（对应GameData.pro中的key）
 		 * 
 		 */
-		GameLoad.loadPlayer("100,100,player1,37,38,39,40,17",
-				"200,200,player2,65,87,68,83,32");
+		GameLoad.loadPlayer("0,0,player1,37,38,39,40,17",
+				"48,48,player2,65,87,68,83,32");
 		
 		// 加载地图，10 可以设置成变量，切换关卡
 		//GameLoad.mapLoad(10);  
