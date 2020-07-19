@@ -94,7 +94,8 @@ public abstract class ElementObj {
 	 * 死亡效果的父类方法
 	 * 
 	 */
-	public void die(){}
+	public void die(long gameTime){
+	}
 	
 	/**
 	 * @说明 本方法返回元素的碰撞矩形对象(实时返回)
@@ -102,7 +103,7 @@ public abstract class ElementObj {
 	 */
 	public Rectangle getRectangle()
 	{
-		return new Rectangle(w,y,w,h); 
+		return new Rectangle(x,y,w,h); 
 	}
 	
 	/**

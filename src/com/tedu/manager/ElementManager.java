@@ -38,6 +38,12 @@ public class ElementManager {
 		gameElements.get(ge).add(obj);
 	}
 	
+	// 删除元素，多半由加载器调用
+	public void removeElement(int index, GameElement ge) {
+		ElementObj obj = gameElements.get(ge).remove(index);
+//		System.out.println("移除：" + obj);
+	}
+	
 	// 根据key，取出对应的集合
 	public List<ElementObj> getElementsByKey(GameElement ge) {
 		return gameElements.get(ge);

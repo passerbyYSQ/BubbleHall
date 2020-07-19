@@ -65,7 +65,6 @@ public class GameThread extends Thread {
 		// 加载图片到集合
 		GameLoad.loadImg();	
 		
-
 		/*
 		 * 加载玩家。可以考虑传参，来控制单人或双人
 		 * 示例："100,100,player";
@@ -73,8 +72,8 @@ public class GameThread extends Thread {
 		 * 初始x的坐标，初始y的坐标，图片的key（对应GameData.pro中的key）
 		 * 
 		 */
-		GameLoad.loadPlayer("0,0,player1,37,38,39,40,17",
-				"48,48,player2,65,87,68,83,32");
+		GameLoad.loadPlayer("192,192,player1,37,38,39,40,17",
+				"192,192,player2,65,87,68,83,32");
 		
 		// 加载NPC...
 		
@@ -87,8 +86,9 @@ public class GameThread extends Thread {
 	 * 				2、新元素的增加（例如：NPC挂了之后出现道具）
 	 * 				3、暂停
 	 */ 
+	private long gameTime = 3L;
 	private void gameRun() {
-		long gameTime = 3L;
+		
 		// 预留扩展，true可以改为变量，用于控制关卡结束等
 		while (true) {
 //			System.out.println("gameRun");
@@ -96,9 +96,9 @@ public class GameThread extends Thread {
 			// 所有元素刷新移动
 			Map<GameElement, List<ElementObj>> all = em.getGameElements();
 			
-			moveAndUpdate(all, gameTime);
+			moveAndUpdate(all);
 			
-//			elementsCollide(GameElement.PLAYFILE, GameElement.ENEMY);
+			elementsCollide(GameElement.PLAYER, GameElement.MAPS);
 //			elementsCollide(GameElement.PLAYFILE, GameElement.MAPS);
 			
 			gameTime++;
@@ -117,19 +117,25 @@ public class GameThread extends Thread {
 		for (ElementObj a : listA) {
 			for (ElementObj b : listB) {
 				if (a.collide(b)) {
+//					System.out.println("Player碰到墙");
+					
+					// 开始死亡动画
+//					a.die(gameTime);
+//					b.die(gameTime);
+					
 					// 扩展问题：如果是boss？也是一枪一个吗？扣血！
 					// 给ElementObj加一个受攻击方法，还可以传入另外一个对象的攻击力
 					// 判断造成的伤害，如果血量减为0，再将alive设置为false
 					// 受攻击方法由子类复写
-					a.setLive(false);
-					b.setLive(false);
-					break;
+//					a.setLive(false);
+//					b.setLive(false);
+//					break;
 				}	
 			}
 		}
 	}
 	
-	public void moveAndUpdate(Map<GameElement, List<ElementObj>> all, long gameTime) {
+	public void moveAndUpdate(Map<GameElement, List<ElementObj>> all) {
 		// GameElement.values()是隐藏方法，无法点进去
 		// 返回的数组的顺序时是枚举变量声明时的顺序
 					
@@ -145,8 +151,8 @@ public class GameThread extends Thread {
 //								list.remove(i--); // 回退
 					
 					// 启动一个消亡方法，方法中可以做很多事情。例如：死亡动画、掉装备
-					obj.die();
-					list.remove(i);
+//					list.remove(i);
+					em.removeElement(i, ge);
 					continue;
 				}
 				

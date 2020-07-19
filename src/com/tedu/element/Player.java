@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import javax.swing.ImageIcon;
 
 import com.tedu.game.GameStart;
+import com.tedu.manager.ElementManager;
+import com.tedu.manager.GameElement;
 import com.tedu.manager.GameLoad;
 
 /**
@@ -37,7 +39,7 @@ public class Player extends ElementObj {
 	 * 为了方便扩展，此处不定义有多少条命，而是直接定义血量
 	 * 一条命的血量值为100，捡到金卡，直接增加100血量（相当于增加一条命）
 	 */
-	private int hp = 100;
+	private int hp = 100; // 基类中已存在！！！需要沟通修改！！！
 	
 	/**
 	 * 用于图片的切割。
@@ -50,6 +52,8 @@ public class Player extends ElementObj {
 	
 	// 上一次的换装时间。用于控制Player的换装速度
 	private long imgTime; 
+	// 死亡动画的开始时间
+	private long dieAnimateStartTime = -1;
 	
 	// 攻击状态。true：攻击；false：停止
 	private boolean pkType = false;
@@ -68,10 +72,12 @@ public class Player extends ElementObj {
 		ImageIcon icon = GameLoad.imgMap.get(split[2]);
 		this.setIcon(icon);
 		
-		// 注意这里设置的是Player显示的宽高，而并非素材图片的宽高
+		// 注意这里设置的是Player显示区域的宽高（一个格子），而并非素材图片的宽高
 		// Player的图片素材是一张需要切割的图片
-		this.setW(icon.getIconWidth());
-		this.setH(icon.getIconHeight());
+//		this.setW(icon.getIconWidth());
+//		this.setH(icon.getIconHeight());
+		this.setW(48);
+		this.setH(48);
 		
 		for (int i = 3; i < split.length; i++) {
 			keys[i - 3] = Integer.parseInt(split[i]);
@@ -87,15 +93,27 @@ public class Player extends ElementObj {
 //						this.getX(), this.getY(), 
 //						this.getW(), this.getH(), null);
 		
-		// 图片分割
-		g.drawImage(this.getIcon().getImage(), 
-				// Player在面板中显示的区域。一个Player占据一个格子的大小（48*48）
-				this.getX(), this.getY(),  // 左上角坐标
-				this.getX() + 48, this.getY() + 48,   // 右下角坐标
-				// Player在图片素材中的位置区域
-				24 + (imgX*100), 34 + (imgY*100),  // 左上角坐标
-				74 + (imgX*100), 100 + (imgY*100),  // 右下角坐标
-				null);
+		if (dieAnimateStartTime == -1) {
+			// 图片分割
+			g.drawImage(this.getIcon().getImage(), 
+					// Player在面板中显示的区域。一个Player占据一个格子的大小（48*48）
+					this.getX(), this.getY(),  // 左上角坐标
+					this.getX() + 48, this.getY() + 48,   // 右下角坐标
+					// Player在图片素材中的位置区域
+					24 + (imgX*100), 34 + (imgY*100),  // 左上角坐标
+					74 + (imgX*100), 100 + (imgY*100),  // 右下角坐标
+					null);
+		} else {
+			g.drawImage(GameLoad.imgMap.get("SurroundedByBubbles").getImage(), 
+					// Player在面板中显示的区域。一个Player占据一个格子的大小（48*48）
+					this.getX(), this.getY(),  // 左上角坐标
+					this.getX() + 48, this.getY() + 48,   // 右下角坐标
+					// Player在图片素材中的位置区域
+					16 + (imgX*100), 18,  // 左上角坐标
+					88 + (imgX*100), 102,  // 右下角坐标
+					null);
+//			System.out.println(imgX);
+		}
 	}
 	
 	/**
@@ -103,18 +121,27 @@ public class Player extends ElementObj {
 	 */
 	@Override
 	protected void updateImage(long gameTime) {
+		// 动画结束判定
+		if (dieAnimateStartTime != -1 && gameTime - dieAnimateStartTime > 70) {
+			// 当死亡动画结束，将该Player的live置为False
+			this.setLive(false);
+			return;
+		}
+		
 		// 如果当前时间和上次换装的时间的间隔大于3，才换一次装
 		if (gameTime - imgTime > 3) {
 			// 更新上一次的换装时间
 			imgTime = gameTime;
 			// 通过更改偏移量，来修改换的装
 			imgX++;
+//			System.out.println(imgX);
 			// 循环换装
 			if (imgX > 3) {
 				imgX = 0;
 			}
 		}
 	}
+	
 	int correctedX=-1;
 	int correctedY=-1;
 	@Override
@@ -152,6 +179,9 @@ public class Player extends ElementObj {
 		}
 	}
 	
+	/**
+	 * 当方向键松开时，确保Player“顺滑”至下一格子
+	 */
 	private void correctPosition2() {
 		if (!isPressed) {
 			if (curDir == 0 || curDir == 2) {
@@ -193,23 +223,27 @@ public class Player extends ElementObj {
 	}
 	
 	/**
-	 * 修正Player的坐标，使Player停下的那一刻，必定在48*48的一格中
-	 * @param x		Player当前的x坐标
-	 * @param y		Player当前的y坐标
+	 * Player和不可穿过的障碍物碰撞后的位置纠正
+	 * 由于碰撞只可能发生在水平（左右）和垂直（上下）方向，故只需要纠正水平或者垂直
+	 * 两个方向中的一个。不需要同时纠正两个方向
 	 */
-	private void correctPosition(int x, int y) {
-		if (x % 48 != 0) {
-			int leftX = x / 48 * 48;
-			int rightX = leftX + 48;
-			int correctedX = (x - leftX <= rightX - x) ? leftX : rightX; 
-			this.setX(correctedX);
-		}
-		
-		if (y % 48 != 0) {
-			int upY = y / 48 * 48;
-			int downY = upY + 48;
-			int correctedY = (y - upY <= downY - y) ? upY : downY; 
-			this.setY(correctedY);
+	private void correctPosition() {
+		if (curDir == 0 || curDir == 2) { // 水平方向
+			int x = this.getX();
+			if (x % 48 != 0) {
+				int leftX = x / 48 * 48;
+				int rightX = leftX + 48;
+				int correctedX = (x - leftX <= rightX - x) ? leftX : rightX; 
+				this.setX(correctedX);
+			}
+		} else if (curDir == 1 || curDir == 3) { // 垂直方向
+			int y = this.getY();
+			if (y % 48 != 0) {
+				int upY = y / 48 * 48;
+				int downY = upY + 48;
+				int correctedY = (y - upY <= downY - y) ? upY : downY; 
+				this.setY(correctedY);
+			}
 		}
 	}
 	
@@ -224,6 +258,7 @@ public class Player extends ElementObj {
 //				|| (correctedY == -1 && correctedX != -1)) {
 //			return;
 //		}
+		
 		/*
 		 * key
 		 * player1：37：左	38：上	39：右	40：下	17：ctrl
@@ -301,15 +336,38 @@ public class Player extends ElementObj {
 			hp -=  harm;
 		} else {
 			// 血量为0，触发死亡方法
-			die();
+			//die();
 		}
  	}
 	
 	@Override
-	public void die() {
-		// 死亡动画
-		// ...
+	public void die(long gameTime) {
+		// 记录死亡动画的开始时间
+		dieAnimateStartTime = gameTime;
+		// 在死亡动画素材图片的初始偏移量
+		imgX = 0;
 	}
 	
+
+	/**
+	 * 重写父类的碰撞方法。方法中增加Player和Map的碰撞判断和为止纠正
+	 */
+	@Override
+	public boolean collide(ElementObj obj) {
+		// 是否发生碰撞
+		boolean isCollided = super.collide(obj);
+		
+		if (isCollided) {
+			// 玩家碰到的是墙（不能穿过）
+			if (obj instanceof Map) {
+				// 当前方向停止移动
+				dirFlag[curDir] = false;
+				correctPosition();
+			}
+		}
+		
+		return isCollided;
+	}
+
 	
 }

@@ -1,6 +1,7 @@
 package com.tedu.element;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -113,6 +114,12 @@ public class Map extends ElementObj{
 			e.printStackTrace();
 		}	
 		return image;
+	}
+	
+	@Override
+	public Rectangle getRectangle() {
+		// TODO Auto-generated method stub
+		return new Rectangle(this.getX(),this.getY(),48,48);
 	}
 
 }
