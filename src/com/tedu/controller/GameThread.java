@@ -125,7 +125,7 @@ public class GameThread extends Thread {
 					if(g1.collide(g2))
 					{
 						g2.setLive(false);
-						g2.die();
+						g2.die(gameTime);
 						return ;
 					}
 				}
