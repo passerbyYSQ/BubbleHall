@@ -183,6 +183,11 @@ public abstract class ElementObj {
 	public void setBubbleNum(int bubbleNum) {
 		this.bubbleNum = bubbleNum;
 	}
+
+	public void die() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

@@ -24,8 +24,8 @@ public class GameJFrame extends JFrame {
 	 * 计划放置格子：15*13
 	 * 地图大小：720*624（跟窗体大小有偏差）
 	 */
-	public static int GameX = 740;
-	public static int GameY = 675;
+	public static int GameX = 734;
+	public static int GameY = 662;
 
 	// 当前正在显示的面板
 	private JPanel jPanel = null; 

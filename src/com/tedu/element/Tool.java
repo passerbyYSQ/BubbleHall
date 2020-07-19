@@ -25,7 +25,7 @@ public class Tool extends ElementObj{
 					4+(num*32), 0, 
 					32+(num*32), 49, null);
 		}
-		else if (this.name.equals("BubbleCopy")) {
+		else if (this.name.equals("BubbleCopy")||this.name.equals("MedicineBottle")) {
 			g.drawImage(this.getIcon().getImage(),
 					this.getX(), this.getY(),
 					this.getX()+32, this.getY()+48, 
@@ -54,16 +54,14 @@ public class Tool extends ElementObj{
 //				通过随机数设置是否掉落道具以及掉落道具的种类
 				case "n":
 					int n=Integer.parseInt(split2[1]);
-					if(n>0&&n<=20){//1-20掉落泡泡
+					if(n>0&&n<=13){//1-13掉落泡泡
 						this.name="BubbleCopy";
 					}
-					else if(n>20&&n<=40){//21-40掉落金卡
+					else if(n>13&&n<=26){//14-26掉落金卡
 						this.name="GoldenCard";
 					}
-					else
-					{
-						this.setName(null);
-						return null;
+					else if(n>26&&n<=40){//27-40掉落药水
+						this.name="MedicineBottle";
 					}
 					String url="image/Characters/"+this.name+".png";
 					ImageIcon icon=new ImageIcon(url);				//通过道具名字设置道具路径
@@ -108,11 +106,15 @@ public class Tool extends ElementObj{
 				{
 					if(this.name.equals("BubbleCopy"))
 					{
-						player.setHP(player.getHP()+1);
+						player.setHP(player.getHP()+100);
 					}
 					else if(this.name.equals("GoldenCard"))
 					{
 						player.setBubbleNum(player.getBubbleNum()+1);
+					}
+					else if(this.name.equals("MedicineBottle"))
+					{
+//						player.setExplosionRange(player.getExplosionRange()+1);
 					}
 				}
 			}
