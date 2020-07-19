@@ -405,5 +405,11 @@ public class Player extends ElementObj {
 		return isCollided;
 	}
 
+	@Override
+	public int compareTo(ElementObj o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 }

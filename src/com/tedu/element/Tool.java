@@ -96,7 +96,7 @@ public class Tool extends ElementObj{
 	}
 //	道具的死亡效果
 	@Override
-	public void die() {
+	public void die(long gameTime) {
 		if(!this.isLive())
 		{
 			List<ElementObj> playerList=ElementManager.getManager().getElementsByKey(GameElement.PLAYER);
@@ -129,5 +129,10 @@ public class Tool extends ElementObj{
 			this.setLive(false);
 		}
 		return super.collide(obj);
+	}
+	@Override
+	public int compareTo(ElementObj o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -1,6 +1,6 @@
 orangefloor=0,0,32,32
 redfloor=32,0,32,32
-greenfloor=64,0,32,32
+greenfloor=66,0,29,32
 box1=96,0,32,32
 ironbox1=0,32,32,32
 ironbox2=32,32,32,31

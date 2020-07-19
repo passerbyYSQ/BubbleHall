@@ -107,5 +107,10 @@ public class PaoPao extends ElementObj{
 	// TODO Auto-generated method stub
 		return "x:"+x+",y:"+y+",playerNum:"+getPlayerNum()+",power:"+getPower();
 	}
+	@Override
+	public int compareTo(ElementObj o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

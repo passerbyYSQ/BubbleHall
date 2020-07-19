@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
  * @author dell
  *
  */
-public abstract class ElementObj {
+public abstract class ElementObj implements Comparable<ElementObj>{
 	/**
 	 * @param 	x 		图片左上角横轴坐标
 	 * @param 	y		图片左上角纵轴坐标
@@ -18,6 +18,7 @@ public abstract class ElementObj {
 	 * @param	h		图片高度
 	 * @param	icon	图片，约定：true代表存活，false代表死亡
 	 * @param	live	存活
+	 * @param   sort    图片加载顺序
 	 */
 	private int x;
 	private int y;
@@ -28,6 +29,7 @@ public abstract class ElementObj {
 	private int bubbleNum=1;  //初始可放置炮弹数量
 	private int playerNum;		//玩家编号
 	private int power=1;			//炮弹威力
+	private int sort;
 	
 	/**
 	 * 是否存货。true：存货；false：消亡
@@ -202,5 +204,12 @@ public abstract class ElementObj {
 		this.power = power;
 	}
 	
+	public int getSort() {
+		return sort;
+	}
+
+	public void setSort(int sort) {
+		this.sort = sort;
+	}
 	
 }

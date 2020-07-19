@@ -82,4 +82,11 @@ public class PaoPaoExplode extends ElementObj{
 			}
 
 
+			@Override
+			public int compareTo(ElementObj o) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+
+
 }

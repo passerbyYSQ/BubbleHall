@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -58,6 +59,9 @@ public class GameMainJPanel extends JPanel implements Runnable {
 		// 返回的数组的顺序时是枚举变量声明时的顺序
 		for (GameElement ge : GameElement.values()) {
 			List<ElementObj> list = all.get(ge);
+			if(ge == GameElement.MAPS) {
+				Collections.sort(list);
+			}
 			for (int i = 0; i < list.size(); i++) {
 				ElementObj obj = list.get(i);
 				obj.showElement(g);
