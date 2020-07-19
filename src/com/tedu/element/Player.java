@@ -78,8 +78,8 @@ public class Player extends ElementObj {
 //		this.setH(icon.getIconHeight());
 		this.setW(48);
 		this.setH(48);
-		
-		for (int i = 3; i < split.length; i++) {
+		this.setPlayerNum(Integer.parseInt(split[split.length-1]));  //最后一个参数记录了玩家编号
+		for (int i = 3; i < split.length-1; i++) {
 			keys[i - 3] = Integer.parseInt(split[i]);
 		}
 		
@@ -178,6 +178,42 @@ public class Player extends ElementObj {
 			this.setY(this.getY() + moveSpeed);
 		}
 	}
+	
+	/**
+	 * 放置泡泡方法
+	 */
+
+	@Override
+		protected void add() { 
+		if(!this.pkType) { //如果是不发射状态，就直接return
+			return;
+		}
+		if (getBubbleNum()<1) {
+			return;
+			
+		}
+		pkType=false;
+	
+		//传递一个固定格式x:3,y:5,playerNum:1,power:2} json格式
+		ElementObj element=new PaoPao().createElement(this.toString());
+		//装入到集合中
+		ElementManager.getManager().addElement(element,GameElement.PAOPAO);
+		setBubbleNum(getBubbleNum()-1);
+	
+
+	}	
+	/**
+	 * 传入放置泡泡所需参数
+	 */
+	@Override
+		public String toString() {  
+		//{x:3,y:5,playerNum:1,power:2}json格式
+		int x=this.getX();
+		int y=this.getY();
+
+			return "x:"+x+",y:"+y+",playerNum:"+getPlayerNum()+",power:"+getPower();
+		}
+	
 	
 	/**
 	 * 当方向键松开时，确保Player“顺滑”至下一格子

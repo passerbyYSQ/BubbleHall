@@ -25,7 +25,9 @@ public abstract class ElementObj {
 	private int h;
 	private ImageIcon icon;
 	private int HP=1;
-	private int bubbleNum;
+	private int bubbleNum=1;  //初始可放置炮弹数量
+	private int playerNum;		//玩家编号
+	private int power=1;			//炮弹威力
 	
 	/**
 	 * 是否存货。true：存货；false：消亡
@@ -182,6 +184,22 @@ public abstract class ElementObj {
 
 	public void setBubbleNum(int bubbleNum) {
 		this.bubbleNum = bubbleNum;
+	}
+
+	public int getPlayerNum() {
+		return playerNum;
+	}
+
+	public void setPlayerNum(int playerNum) {
+		this.playerNum = playerNum;
+	}
+
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower(int power) {
+		this.power = power;
 	}
 	
 	

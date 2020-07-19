@@ -71,9 +71,11 @@ public class GameThread extends Thread {
 		 * 参数说明：
 		 * 初始x的坐标，初始y的坐标，图片的key（对应GameData.pro中的key）
 		 * 
+		 * 最后一个参数用于记录玩家1号还是2号  阿灿
+		 * 
 		 */
-		GameLoad.loadPlayer("192,192,player1,37,38,39,40,17",
-				"192,192,player2,65,87,68,83,32");
+		GameLoad.loadPlayer("192,192,player1,37,38,39,40,17,1",
+				"192,192,player2,65,87,68,83,32,2");
 		
 		// 加载NPC...
 		
@@ -152,6 +154,7 @@ public class GameThread extends Thread {
 					
 					// 启动一个消亡方法，方法中可以做很多事情。例如：死亡动画、掉装备
 //					list.remove(i);
+					obj.die(gameTime);  //调用死亡方法
 					em.removeElement(i, ge);
 					continue;
 				}
