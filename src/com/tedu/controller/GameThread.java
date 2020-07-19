@@ -101,7 +101,7 @@ public class GameThread extends Thread {
 			moveAndUpdate(all);
 			
 			elementsCollide(GameElement.PLAYER, GameElement.MAPS);
-//			elementsCollide(GameElement.PLAYFILE, GameElement.MAPS);
+			elementsCollide(GameElement.PLAYER, GameElement.TOOL);
 			
 			gameTime++;
 			try {
@@ -115,7 +115,22 @@ public class GameThread extends Thread {
 	public void elementsCollide(GameElement eleA, GameElement eleB) {
 		List<ElementObj> listA = em.getElementsByKey(eleA);
 		List<ElementObj> listB = em.getElementsByKey(eleB);
-		
+		//人物和道具之间的碰撞设置
+		if(eleA==GameElement.PLAYER&&eleB==GameElement.TOOL)
+		{
+			for(ElementObj g1:listA)
+			{
+				for(ElementObj g2:listB)
+				{
+					if(g1.collide(g2))
+					{
+						g2.setLive(false);
+						g2.die();
+						return ;
+					}
+				}
+			}
+		}
 		for (ElementObj a : listA) {
 			for (ElementObj b : listB) {
 				if (a.collide(b)) {
@@ -140,7 +155,7 @@ public class GameThread extends Thread {
 	public void moveAndUpdate(Map<GameElement, List<ElementObj>> all) {
 		// GameElement.values()是隐藏方法，无法点进去
 		// 返回的数组的顺序时是枚举变量声明时的顺序
-					
+		
 		for (GameElement ge : GameElement.values()) {
 			List<ElementObj> list = all.get(ge);
 			// 操作集合不要使用迭代器foreach，修改数据会抛出异常
@@ -196,4 +211,5 @@ public class GameThread extends Thread {
 		
 	}
 	*/
+	
 }
