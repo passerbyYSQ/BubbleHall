@@ -390,6 +390,13 @@ public class Player extends ElementObj {
 	 */
 	@Override
 	public boolean collide(ElementObj obj) {
+		if (obj instanceof Map) { 
+			Map map = (Map) obj;
+			if (map.getType() == 0) { // 地板不碰撞
+				return false;
+			}
+		}
+		
 		// 是否发生碰撞
 		boolean isCollided = super.collide(obj);
 		
@@ -410,6 +417,4 @@ public class Player extends ElementObj {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
 }

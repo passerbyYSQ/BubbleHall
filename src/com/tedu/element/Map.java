@@ -146,4 +146,9 @@ public class Map extends ElementObj{
 		return new Rectangle(this.getX(),this.getY(),48,48);
 	}
 
+	public int getType() {
+		return type;
+	}
+	
+
 }
