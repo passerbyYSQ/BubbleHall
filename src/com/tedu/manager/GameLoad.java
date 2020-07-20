@@ -64,6 +64,10 @@ public class GameLoad {
 					em.addElement(element, GameElement.MAPS);
 				}
 			}	
+
+			// 对地图List进行排序
+			Collections.sort(em.getElementsByKey(GameElement.MAPS));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

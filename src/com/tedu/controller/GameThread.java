@@ -168,9 +168,10 @@ public class GameThread extends Thread {
 //								list.remove(i--); // 回退
 					
 					// 启动一个消亡方法，方法中可以做很多事情。例如：死亡动画、掉装备
-//					list.remove(i);
+//					
 					obj.die(gameTime);  //调用死亡方法
 					em.removeElement(i, ge);
+//					list.remove(i);
 					continue;
 				}
 				
