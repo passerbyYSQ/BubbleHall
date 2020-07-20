@@ -19,6 +19,8 @@ import com.tedu.manager.GameElement;
 public class GameListener implements KeyListener {
 	private ElementManager em = ElementManager.getManager();
 	
+	//记录当前暂停状态
+	private boolean isPause=false;
 	// 记录按下的方向键
 	private Set<Integer> set = new HashSet<>();
 
@@ -44,7 +46,7 @@ public class GameListener implements KeyListener {
 			return;
 		}
 		set.add(key);
-		
+
 		// 拿到玩家集合
 		List<ElementObj> playList = em.getElementsByKey(GameElement.PLAYER);
 		for (ElementObj obj : playList) {
@@ -61,10 +63,15 @@ public class GameListener implements KeyListener {
 			return;
 		}
 		set.remove(key);
-		
 		List<ElementObj> playList = em.getElementsByKey(GameElement.PLAYER);
 		for (ElementObj obj : playList) {
 			obj.keyClick(false, key);
+		}
+		if(key==80)
+		{
+			System.out.println("进来了");
+			isPause=!isPause;
+			GameThread.setPause(isPause);
 		}
 	}
 

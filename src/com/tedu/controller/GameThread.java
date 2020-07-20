@@ -25,7 +25,8 @@ public class GameThread extends Thread {
 	
 	// 联动元素管理器
 	private ElementManager em;
-	
+	//暂停判定
+	private static boolean isPause=false;
 	public GameThread() {
 		em = ElementManager.getManager();
 	}
@@ -95,15 +96,18 @@ public class GameThread extends Thread {
 		while (true) {
 //			System.out.println("gameRun");
 			
-			// 所有元素刷新移动
-			Map<GameElement, List<ElementObj>> all = em.getGameElements();
-			
-			moveAndUpdate(all);
-			
-			elementsCollide(GameElement.PLAYER, GameElement.MAPS);
-			elementsCollide(GameElement.PLAYER, GameElement.TOOL);
-			
-			gameTime++;
+			if(!isPause)
+			{
+				// 所有元素刷新移动
+				Map<GameElement, List<ElementObj>> all = em.getGameElements();
+				
+				moveAndUpdate(all);
+				
+				elementsCollide(GameElement.PLAYER, GameElement.MAPS);
+				elementsCollide(GameElement.PLAYER, GameElement.TOOL);
+				
+				gameTime++;
+			}
 			try {
 				sleep(35);
 			} catch (InterruptedException e) {
@@ -186,7 +190,19 @@ public class GameThread extends Thread {
 	private void gameOver() {
 	
 	}
-	
+
+	/**
+	 * 游戏暂停状态设置
+	 * @return
+	 */
+	static boolean isPause() {
+		return isPause;
+	}
+
+	static void setPause(boolean pause) {
+		isPause = pause;
+	}
+
 	/*
 	protected void load() {
 		ImageIcon icon = new ImageIcon("image/tank/play1/player1_up.png");
@@ -212,5 +228,6 @@ public class GameThread extends Thread {
 		
 	}
 	*/
+	
 	
 }
