@@ -106,15 +106,18 @@ public class Tool extends ElementObj{
 				{
 					if(this.name.equals("BubbleCopy"))
 					{
-						player.setHP(player.getHP()+100);
+						Player player1=(Player)player;
+						player1.setHp(player1.getHp()+100);
 					}
 					else if(this.name.equals("GoldenCard"))
 					{
-						player.setBubbleNum(player.getBubbleNum()+1);
+						Player player1=(Player)player;
+						player1.setBubbleNum(player1.getBubbleNum()+1);
 					}
 					else if(this.name.equals("MedicineBottle"))
 					{
-//						player.setExplosionRange(player.getExplosionRange()+1);
+						Player player1=(Player)player;
+						player1.setPower(player1.getPower()+1);
 					}
 				}
 			}

@@ -25,10 +25,6 @@ public abstract class ElementObj implements Comparable<ElementObj>{
 	private int w;
 	private int h;
 	private ImageIcon icon;
-//	private int HP=1;
-	private int bubbleNum=1;  //初始可放置炮弹数量
-	private int playerNum;		//玩家编号
-	private int power=1;			//炮弹威力
 	private int sort;
 	
 	/**
@@ -170,38 +166,6 @@ public abstract class ElementObj implements Comparable<ElementObj>{
 
 	public void setLive(boolean live) {
 		this.live = live;
-	}
-
-//	public int getHP() {
-//		return HP;
-//	}
-//
-//	public void setHP(int hP) {
-//		HP = hP;
-//	}
-
-	public int getBubbleNum() {
-		return bubbleNum;
-	}
-
-	public void setBubbleNum(int bubbleNum) {
-		this.bubbleNum = bubbleNum;
-	}
-
-	public int getPlayerNum() {
-		return playerNum;
-	}
-
-	public void setPlayerNum(int playerNum) {
-		this.playerNum = playerNum;
-	}
-
-	public int getPower() {
-		return power;
-	}
-
-	public void setPower(int power) {
-		this.power = power;
 	}
 	
 	public int getSort() {

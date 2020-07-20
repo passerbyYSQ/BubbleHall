@@ -39,7 +39,10 @@ public class Player extends ElementObj {
 	 * 为了方便扩展，此处不定义有多少条命，而是直接定义血量
 	 * 一条命的血量值为100，捡到金卡，直接增加100血量（相当于增加一条命）
 	 */
-	private int hp = 100; // 基类中已存在！！！需要沟通修改！！！
+	private int hp = 100; 		//定义私有属性血量
+	private int bubbleNum=1;	//定义私有属性最大可放置泡泡个数
+	private int playerNum;		//玩家编号
+	private int power=1;		//炮弹威力
 	
 	/**
 	 * 用于图片的切割。
@@ -210,8 +213,20 @@ public class Player extends ElementObj {
 		//{x:3,y:5,playerNum:1,power:2}json格式
 		int x=this.getX();
 		int y=this.getY();
-
-			return "x:"+x+",y:"+y+",playerNum:"+getPlayerNum()+",power:"+getPower();
+		if (curDir == 0 || curDir == 2) { // 水平方向
+			if (x % 48 != 0) {
+				int leftX = x / 48 * 48;
+				int rightX = leftX + 48;
+				x = (x - leftX <= rightX - x) ? leftX : rightX; 
+			}
+		} else if (curDir == 1 || curDir == 3) { // 垂直方向
+			if (y % 48 != 0) {
+				int upY = y / 48 * 48;
+				int downY = upY + 48;
+				y = (y - upY <= downY - y) ? upY : downY; 
+			}
+		}
+		return "x:"+x+",y:"+y+",playerNum:"+getPlayerNum()+",power:"+getPower();
 		}
 	
 	
@@ -282,6 +297,7 @@ public class Player extends ElementObj {
 			}
 		}
 	}
+	
 	
 	private boolean isPressed = false;
 	
@@ -411,10 +427,44 @@ public class Player extends ElementObj {
 		
 		return isCollided;
 	}
-
+	//泡泡个数、血量和玩家编号的get和set方法
 	@Override
 	public int compareTo(ElementObj o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public int getBubbleNum() {
+		return bubbleNum;
+	}
+
+	public void setBubbleNum(int bubbleNum) {
+		this.bubbleNum = bubbleNum;
+	}
+
+	public int getPlayerNum() {
+		return playerNum;
+	}
+
+	public void setPlayerNum(int playerNum) {
+		this.playerNum = playerNum;
+	}
+
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower(int power) {
+		this.power = power;
+	}
+	
+	
 }

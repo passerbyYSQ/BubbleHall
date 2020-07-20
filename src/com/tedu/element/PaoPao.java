@@ -16,7 +16,8 @@ public class PaoPao extends ElementObj{
 	private int imgx = 0;
 	private int imgy=0;
 	private long imgtime = 0;
-
+	private int power;
+	private int playerNum;
 	
 	public PaoPao() {}
 	//对创建这个对象的过程进行封装，外界值只需要传输必要的约定参数，返回值就是实体对象
@@ -28,8 +29,9 @@ public class PaoPao extends ElementObj{
 			switch (split2[0]) {
 			case "x": this.setX(Integer.parseInt(split2[1]));break;
 			case "y": this.setY(Integer.parseInt(split2[1]));break;
-			case "playerNum": this.setPlayerNum(Integer.parseInt(split2[1]));break;
-			case "power": this.setPower(Integer.parseInt(split2[1]));break;
+			case "playerNum": playerNum=Integer.parseInt(split2[1]);
+								break;
+			case "power": power=Integer.parseInt(split2[1]);break;
 		
 			}
 		}
@@ -58,7 +60,7 @@ public class PaoPao extends ElementObj{
 	@Override
 	public void move() {
 		Timer timer = new Timer(true);
-		TimerTask task = new TimerTask() {
+		TimerTask task = new TimerTask() { 
 			@Override
 			public void run() {
 				setLive(false);
@@ -81,7 +83,7 @@ public class PaoPao extends ElementObj{
 			ElementManager.getManager().addElement(element,GameElement.EXPLODE);
 			//改变炸弹玩家已经放在炸弹数bubbleNum,显示爆炸效果，加入ExplodeBubble
 			List<ElementObj> list2 = ElementManager.getManager().getElementsByKey(GameElement.PLAYER);
-			Player player = (Player) list2.get(getPlayerNum()-1);
+			Player player = (Player) list2.get(playerNum-1);
 			player.setBubbleNum(player.getBubbleNum()+1);
 		
 			
@@ -105,7 +107,7 @@ public class PaoPao extends ElementObj{
 		int y=this.getY();
 
 	// TODO Auto-generated method stub
-		return "x:"+x+",y:"+y+",playerNum:"+getPlayerNum()+",power:"+getPower();
+		return "x:"+x+",y:"+y+",playerNum:"+playerNum+",power:"+power;
 	}
 	@Override
 	public int compareTo(ElementObj o) {
@@ -113,4 +115,6 @@ public class PaoPao extends ElementObj{
 		return 0;
 	}
 
+	
+	
 }

@@ -14,6 +14,8 @@ import com.tedu.manager.GameLoad;
  *
  */
 public class PaoPaoExplode extends ElementObj{
+	private int power;
+	private int playerNum;
 	//爆炸四个方向及中心的图片
 			private static ImageIcon imgCenter = GameLoad.imgMap.get("ppexplode");
 			private static ImageIcon imgUp = GameLoad.imgMap.get("ppexplode");
@@ -29,20 +31,20 @@ public class PaoPaoExplode extends ElementObj{
 					912, 623, 1000, 712,
 					null);
 			g.drawImage(imgUp.getImage(),
-					getX(), getY()-48*getPower(), getX()+48  , getY(),
-					891, 0, 1014, 88+100*(getPower()-1),
+					getX(), getY()-48*power, getX()+48  , getY(),
+					891, 0, 1014, 88+100*(power-1),
 					null);
 			g.drawImage(imgDown.getImage(),
-					getX(), getY()+48, getX()+48, getY()+48+48*getPower(),
-					891,  1331-100*(getPower()-1), 1022,1411,
+					getX(), getY()+48, getX()+48, getY()+48+48*power,
+					891,  1331-100*(power-1), 1022,1411,
 					null);
 			g.drawImage(imgLeft.getImage(),
-					getX()-48*getPower(), getY(), getX(), getY()+48,
-					6, 603, 124+100*(getPower()-1), 732,
+					getX()-48*power, getY(), getX(), getY()+48,
+					6, 603, 124+100*(power-1), 732,
 					null);
 			g.drawImage(imgRight.getImage(),
-					getX()+48, getY(), getX()+48+48*getPower(), getY()+48,
-					1760-100*(getPower()-1), 609, 1880, 731,
+					getX()+48, getY(), getX()+48+48*power, getY()+48,
+					1760-100*(power-1), 609, 1880, 731,
 					null);
 		
 		}
@@ -56,8 +58,8 @@ public class PaoPaoExplode extends ElementObj{
 				switch (split2[0]) {
 				case "x": this.setX(Integer.parseInt(split2[1]));break;
 				case "y": this.setY(Integer.parseInt(split2[1]));break;
-				case "playerNum": this.setPlayerNum(Integer.parseInt(split2[1]));break;
-				case "power": this.setPower(Integer.parseInt(split2[1]));break;
+				case "playerNum": playerNum=Integer.parseInt(split2[1]);break;
+				case "power": power=Integer.parseInt(split2[1]);break;
 				}
 			}
 			ImageIcon icon = GameLoad.imgMap.get("ppexplode");
