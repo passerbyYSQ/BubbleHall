@@ -28,7 +28,8 @@ public class GameThread extends Thread {
 	
 	// 联动元素管理器
 	private ElementManager em;
-	
+	//暂停判定符
+	private static boolean isPause;
 	public GameThread() {
 		em = ElementManager.getManager();
 	}
@@ -97,19 +98,22 @@ public class GameThread extends Thread {
 		// 预留扩展，true可以改为变量，用于控制关卡结束等
 		while (true) {
 //			System.out.println("gameRun");
-			
-			// 所有元素刷新移动
-			Map<GameElement, List<ElementObj>> all = em.getGameElements();
-			
-			moveAndUpdate(all);
-			
-			// 约定：第一个参数：碰撞的主动方；第二个参数：被碰撞的一方
-			elementsCollide(GameElement.PLAYER, GameElement.MAPS); // Player和障碍物
-			elementsCollide(GameElement.EXPLODE, GameElement.PLAYER); // 泡泡爆炸和Player
-//			elementsCollide(GameElement.EXPLODE, GameElement.MAPS); // 泡泡爆炸和地图
-			elementsCollide(GameElement.PLAYER, GameElement.TOOL);	// Player和道具
-			
-			gameTime++;
+			if(!isPause)
+			{
+				// 所有元素刷新移动
+				Map<GameElement, List<ElementObj>> all = em.getGameElements();
+				
+				moveAndUpdate(all);
+				
+				// 约定：第一个参数：碰撞的主动方；第二个参数：被碰撞的一方
+				elementsCollide(GameElement.PLAYER, GameElement.MAPS); // Player和障碍物
+				elementsCollide(GameElement.EXPLODE, GameElement.PLAYER); // 泡泡爆炸和Player
+	//			elementsCollide(GameElement.EXPLODE, GameElement.MAPS); // 泡泡爆炸和地图
+				elementsCollide(GameElement.PLAYER, GameElement.TOOL);	// Player和道具
+				
+				gameTime++;
+				
+			}
 			try {
 				sleep(35);
 			} catch (InterruptedException e) {
@@ -202,6 +206,19 @@ public class GameThread extends Thread {
 	private void gameOver() {
 	
 	}
+
+	/**
+	 * 游戏暂停状态设置
+	 * @return
+	 */
+	static boolean isPause() {
+		return isPause;
+	}
+
+	static void setPause(boolean pause) {
+		isPause = pause;
+	}
+
 	
 	/*
 	protected void load() {

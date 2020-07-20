@@ -21,7 +21,8 @@ public class GameListener implements KeyListener {
 	
 	// 记录按下的方向键
 	private Set<Integer> set = new HashSet<>();
-
+	//记录当前暂停状态
+	private boolean isPause=false;
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -65,6 +66,12 @@ public class GameListener implements KeyListener {
 		List<ElementObj> playList = em.getElementsByKey(GameElement.PLAYER);
 		for (ElementObj obj : playList) {
 			obj.keyClick(false, key);
+		}
+		if(key==80)
+		{
+			System.out.println("进来了");
+			isPause=!isPause;
+			GameThread.setPause(isPause);
 		}
 	}
 
