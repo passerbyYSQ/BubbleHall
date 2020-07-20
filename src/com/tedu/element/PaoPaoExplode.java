@@ -1,6 +1,7 @@
 package com.tedu.element;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -90,5 +91,31 @@ public class PaoPaoExplode extends ElementObj{
 				return 0;
 			}
 
+			/**
+			 * 重写父类的碰撞方法。
+			 */
+			@Override
+			public boolean collide(ElementObj obj) {
+				if (obj instanceof Map) { 
+					Map map = (Map) obj;
+					if (map.getType() == 0) { // 地板不碰撞
+						return false;
+					}
+				}
+				
+				//if (obj instanceof Player) { 
+					Rectangle explodeColumn = 
+							new Rectangle(getX(), getY()-48*power, 48, 48*(3+power));//水泡爆炸十字纵向
+					Rectangle explodeRow =  
+							new Rectangle(getX()-48*power, getY(), 48*(3+power),48);//水泡爆炸十字横向
+					boolean column = explodeColumn.intersects(obj.getRectangle());
+					boolean row = explodeRow.intersects(obj.getRectangle());
+					return (column||row);
+				//}
+				
+			
+				
+				
+			}
 
 }
