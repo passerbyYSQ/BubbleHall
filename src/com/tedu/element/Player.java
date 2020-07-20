@@ -1,6 +1,7 @@
 package com.tedu.element;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
@@ -115,6 +116,7 @@ public class Player extends ElementObj {
 		}
 	}
 	
+	
 	/**
 	 * Player的换装动画
 	 */
@@ -145,6 +147,11 @@ public class Player extends ElementObj {
 	int correctedY=-1;
 	@Override
 	protected void move() {
+		// 死亡动画执行期间，禁止移动
+		if (dieAnimateStartTime != -1) {
+			return;
+		}
+		
 //		System.out.println(this.isPressed);
 //		if (correctedX!=-1 && correctedY!=-1)
 //		System.out.println("correctedX=" + correctedX + ";correctedY=" + correctedY);
@@ -181,9 +188,8 @@ public class Player extends ElementObj {
 	/**
 	 * 放置泡泡方法
 	 */
-
 	@Override
-		protected void add() { 
+	protected void add() { 
 		if(!this.pkType) { //如果是不发射状态，就直接return
 			return;
 		}
@@ -195,17 +201,17 @@ public class Player extends ElementObj {
 	
 		//传递一个固定格式x:3,y:5,playerNum:1,power:2} json格式
 		ElementObj element=new PaoPao().createElement(this.toString());
+		GameLoad.playMusic("layBubble");
+		
 		//装入到集合中
 		ElementManager.getManager().addElement(element,GameElement.PAOPAO);
-		setBubbleNum(getBubbleNum()-1);
-	
-
+		setBubbleNum(getBubbleNum()-1);	
 	}	
 	/**
 	 * 传入放置泡泡所需参数
 	 */
 	@Override
-		public String toString() {  
+	public String toString() {  
 		//{x:3,y:5,playerNum:1,power:2}json格式
 		int x=this.getX();
 		int y=this.getY();
