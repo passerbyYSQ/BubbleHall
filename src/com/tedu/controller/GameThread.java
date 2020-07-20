@@ -6,6 +6,9 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 
 import com.tedu.element.ElementObj;
+import com.tedu.element.PaoPao;
+import com.tedu.element.PaoPaoExplode;
+import com.tedu.element.Player;
 import com.tedu.manager.ElementManager;
 import com.tedu.manager.GameElement;
 import com.tedu.manager.GameLoad;
@@ -100,8 +103,11 @@ public class GameThread extends Thread {
 			
 			moveAndUpdate(all);
 			
-			elementsCollide(GameElement.PLAYER, GameElement.MAPS);
-			elementsCollide(GameElement.PLAYER, GameElement.TOOL);
+			// 约定：第一个参数：碰撞的主动方；第二个参数：被碰撞的一方
+			elementsCollide(GameElement.PLAYER, GameElement.MAPS); // Player和障碍物
+			elementsCollide(GameElement.EXPLODE, GameElement.PLAYER); // 泡泡爆炸和Player
+//			elementsCollide(GameElement.EXPLODE, GameElement.MAPS); // 泡泡爆炸和地图
+			elementsCollide(GameElement.PLAYER, GameElement.TOOL);	// Player和道具
 			
 			gameTime++;
 			try {
@@ -112,6 +118,11 @@ public class GameThread extends Thread {
 		}
 	}
 	
+	/**
+	 * 注意，做一种约定
+	 * @param eleA		碰撞的主动方
+	 * @param eleB		被撞的一方
+	 */
 	public void elementsCollide(GameElement eleA, GameElement eleB) {
 		List<ElementObj> listA = em.getElementsByKey(eleA);
 		List<ElementObj> listB = em.getElementsByKey(eleB);
@@ -134,7 +145,12 @@ public class GameThread extends Thread {
 		for (ElementObj a : listA) {
 			for (ElementObj b : listB) {
 				if (a.collide(b)) {
-//					System.out.println("Player碰到墙");
+					
+					// 爆炸时碰撞，未爆炸时的不碰撞
+					if (eleA.equals(GameElement.EXPLODE)
+							&& eleB.equals(GameElement.PLAYER)) {
+						b.die(gameTime);
+					}
 					
 					// 开始死亡动画
 //					a.die(gameTime);

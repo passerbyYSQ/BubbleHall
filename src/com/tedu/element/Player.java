@@ -34,12 +34,8 @@ public class Player extends ElementObj {
 	private int curDir = 1;
 	// Player移动速度
 	private int moveSpeed = 6;
-	/**
-	 * 血量
-	 * 为了方便扩展，此处不定义有多少条命，而是直接定义血量
-	 * 一条命的血量值为100，捡到金卡，直接增加100血量（相当于增加一条命）
-	 */
-	private int hp = 100; 		//定义私有属性血量
+	
+	private int hp = 1; 		//定义私有属性血量（等价于有多少条命）
 	private int bubbleNum=1;	//定义私有属性最大可放置泡泡个数
 	private int playerNum;		//玩家编号
 	private int power=1;		//炮弹威力
@@ -303,7 +299,12 @@ public class Player extends ElementObj {
 	
 	@Override
 	public void keyClick(boolean isPressed, int key) {
-		this.isPressed = isPressed;
+		
+//		this.isPressed = isPressed;
+		// 修正，移动过程中放置泡泡后人物会移动不了
+		if (key != keys[4]) {
+			this.isPressed = isPressed;
+		}
 		
 //		System.out.println("correctedX=" + correctedX + ";correctedY=" + correctedY);
 //		if ((correctedX == -1 && correctedY != -1)
@@ -383,17 +384,22 @@ public class Player extends ElementObj {
 	 * 受伤害
 	 * @param harm	造成的伤害（需要减掉的血量）
 	 */
-	public void injured(int harm) {
-		if (hp - harm > 0) {
-			hp -=  harm;
-		} else {
-			// 血量为0，触发死亡方法
-			//die();
-		}
- 	}
+//	public void injured(int harm) {
+//		if (hp - harm > 0) {
+//			hp -=  harm;
+//		} else {
+//			// 血量为0，触发死亡方法
+//			//die();
+//		}
+// 	}
 	
 	@Override
 	public void die(long gameTime) {
+		if (hp > 1) {
+			hp--;
+			return;
+		}
+		
 		// 记录死亡动画的开始时间
 		dieAnimateStartTime = gameTime;
 		// 在死亡动画素材图片的初始偏移量
@@ -465,6 +471,4 @@ public class Player extends ElementObj {
 	public void setPower(int power) {
 		this.power = power;
 	}
-	
-	
 }
