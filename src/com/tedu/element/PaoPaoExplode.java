@@ -72,22 +72,11 @@ public class PaoPaoExplode extends ElementObj{
 			this.setIcon(icon);
 			this.setW(icon.getIconWidth());
 			this.setH(icon.getIconHeight());
-			setstep();
+			
 			return this;
 		}
 		
-		private void setstep() {
-			for (int i = 0; i < power; i++) {
-				Rectangle step= 
-						new Rectangle(getX(), getY()-48*(i+1), 48, 48);
-				if (step.intersects(r)) {
-					
-				}
-				
-			}
-			
-			
-		}
+
 
 
 			//使用计时器，2.5秒改变Alive状态
