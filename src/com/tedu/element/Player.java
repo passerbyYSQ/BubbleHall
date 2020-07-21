@@ -2,6 +2,7 @@ package com.tedu.element;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -37,7 +38,7 @@ public class Player extends ElementObj {
 	// Player移动速度
 	private int moveSpeed = 6;
 	
-	private int hp = 1; 		//定义私有属性血量（等价于有多少条命）
+	private int hp = 1 ;		//定义私有属性血量（等价于有多少条命）
 	private int bubbleNum=1;	//定义私有属性最大可放置泡泡个数
 	private int playerNum;		//玩家编号
 	private int power=1;		//炮弹威力
@@ -213,6 +214,7 @@ public class Player extends ElementObj {
 		//装入到集合中
 		ElementManager.getManager().addElement(element,GameElement.PAOPAO);
 		setBubbleNum(getBubbleNum()-1);	
+		
 	}	
 	/**
 	 * 传入放置泡泡所需参数
@@ -446,7 +448,14 @@ public class Player extends ElementObj {
 		
 		// 是否发生碰撞
 		boolean isCollided = super.collide(obj);
-		
+		List<ElementObj> list = ElementManager.getManager().getElementsByKey(GameElement.PAOPAO);
+		if (list.size()>1) {
+			flat=0;
+			if (Math.abs(obj.getX()-this.getX())>=40||Math.abs(obj.getY()-this.getY())>=40) {
+				flat=1;
+				
+			}
+		}
 		if (isCollided) {
 			// 玩家碰到的是墙（不能穿过）
 			if (obj instanceof Map) {
