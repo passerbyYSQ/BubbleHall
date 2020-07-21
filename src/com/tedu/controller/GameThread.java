@@ -29,9 +29,13 @@ public class GameThread extends Thread {
 	// 联动元素管理器
 	private ElementManager em;
 	
+	//选择地图
+	private int map = 0; //默认值为0，即未选择地图
+	
 	//暂停判定符
 	private static boolean isPause;
-	public GameThread() {
+	public GameThread(int map) {
+		this.map = map;
 		em = ElementManager.getManager();
 	}
 	
@@ -73,7 +77,7 @@ public class GameThread extends Thread {
 		GameLoad.loadMusic();
 		
 		// 加载地图，10 可以设置成变量，切换关卡
-		GameLoad.MapLoad(1);  
+		GameLoad.MapLoad(this.map);  
 		
 		/*
 		 * 加载玩家。可以考虑传参，来控制单人或双人
@@ -86,6 +90,8 @@ public class GameThread extends Thread {
 		 */
 		GameLoad.loadPlayer("144,144,player1,37,38,39,40,17,1",
 				"144,144,player2,65,87,68,83,32,2");
+		
+//		GameLoad.loadPlayer("144,144,player1,37,38,39,40,17,1");
 		
 		// 加载NPC...
 		
@@ -164,6 +170,7 @@ public class GameThread extends Thread {
 				}
 			}
 		}
+		
 		// 泡泡爆炸和泡泡之间的碰撞设置
 		if (eleA == GameElement.EXPLODE && eleB == GameElement.PAOPAO) {
 			for (ElementObj g1 : listA) {
@@ -175,19 +182,15 @@ public class GameThread extends Thread {
 				}
 			}
 		}
+		
 		// player和泡泡之间的碰撞设置
 		if (eleA == GameElement.PLAYER && eleB == GameElement.PAOPAO) {
 			for (ElementObj g1 : listA) {
 				for (ElementObj g2 : listB) {
 					if (g1.collide(g2)) {
-						Player player=(Player)g1;
-						player.setFlat(0);
-					}else {
-						Player player=(Player)g1;
-						player.setFlat(1);
+//						PaoPao paopao = (PaoPao) g2;
+//						paopao.setFirst(false);
 					}
-					
-					
 				}
 			}
 		}

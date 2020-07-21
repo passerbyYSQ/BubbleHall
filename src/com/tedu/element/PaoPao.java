@@ -121,7 +121,22 @@ public class PaoPao extends ElementObj{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	// 用于碰撞检测
+	private boolean isFirst = true;
 
+	public boolean isFirst() {
+		return isFirst;
+	}
+	public void setFirst(boolean isFirst) {
+		this.isFirst = isFirst;
+	}
+	public int getPlayerNum() {
+		return playerNum;
+	}
+	public void setPlayerNum(int playerNum) {
+		this.playerNum = playerNum;
+	}
+	
 	
 	
 }
