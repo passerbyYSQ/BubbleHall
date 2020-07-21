@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  * @author passerbyYSQ
  * @create 2020年7月13日 下午2:48:25
  */
-public class GameJFrame extends JFrame {
+public class GameJFrame extends JFrame{
 	
 	/**
 	 * 单个箱子像素：48*48
@@ -93,6 +93,9 @@ public class GameJFrame extends JFrame {
 	 * spring 中ioc进行对象的自动生成，管理
 	 */
 	public void setjPanel(JPanel jPanel) {
+		if(this.jPanel != null) {
+			this.remove(this.jPanel);
+		}
 		this.jPanel = jPanel;
 	}
 	

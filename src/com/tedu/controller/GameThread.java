@@ -29,9 +29,13 @@ public class GameThread extends Thread {
 	// 联动元素管理器
 	private ElementManager em;
 	
+	//选择地图
+	private int map = 0; //默认值为0，即未选择地图
+	
 	//暂停判定符
 	private static boolean isPause;
-	public GameThread() {
+	public GameThread(int map) {
+		this.map = map;
 		em = ElementManager.getManager();
 	}
 	
@@ -73,7 +77,7 @@ public class GameThread extends Thread {
 		GameLoad.loadMusic();
 		
 		// 加载地图，10 可以设置成变量，切换关卡
-		GameLoad.MapLoad(1);  
+		GameLoad.MapLoad(this.map);  
 		
 		/*
 		 * 加载玩家。可以考虑传参，来控制单人或双人

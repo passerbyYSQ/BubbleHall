@@ -5,3 +5,6 @@ map1=image/Characters/Case.png
 map2=image/BubblesMap.png
 paopao=image/Characters/Bubbles5.png
 ppexplode=image/ppExled.png
+single=image/rect1.png
+double=image/rect2.png
+ground=image/Titles.png
