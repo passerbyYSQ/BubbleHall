@@ -69,7 +69,6 @@ public class GameListener implements KeyListener {
 		}
 		if(key==80)
 		{
-			System.out.println("进来了");
 			isPause=!isPause;
 			GameThread.setPause(isPause);
 		}

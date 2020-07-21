@@ -399,17 +399,29 @@ public class Player extends ElementObj {
 //		}
 // 	}
 	
+//	设置参数用于人物闪烁和闪烁次数
+	private int flickerTime=0;
 	@Override
 	public void die(long gameTime) {
-		if (hp > 1) {
+		if (hp >= 1 && flickerTime==0) {
+			flickerTime++;
 			hp--;
 			return;
 		}
-		
-		// 记录死亡动画的开始时间
-		dieAnimateStartTime = gameTime;
-		// 在死亡动画素材图片的初始偏移量
-		imgX = 0;
+		if(flickerTime>0 && flickerTime<14)
+		{
+			flickerTime++;
+		}
+		else {
+			flickerTime=0;
+		}
+		if(hp<1)
+		{
+			// 记录死亡动画的开始时间
+			dieAnimateStartTime = gameTime;
+			// 在死亡动画素材图片的初始偏移量
+			imgX = 0;
+		}
 	}
 	
 
