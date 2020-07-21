@@ -46,8 +46,8 @@ public class Map extends ElementObj{
 			this.type = 2;
 			this.hp = 99999;
 			this.setSort(2);
-			String img = setimage(split[0],"map2");
-			icon = new ImageIcon(img);
+			setimage(split[0],"map2");
+			icon = GameLoad.imgMap.get("map2");
 		}
 		else {
 			if(split[0].equals("greenfloor")) {
@@ -58,8 +58,8 @@ public class Map extends ElementObj{
 				this.hp = 1;
 				this.setSort(2);
 			}
-			String img = setimage(split[0],"map1");
-			icon = new ImageIcon(img);		 
+			setimage(split[0],"map1");
+			icon = GameLoad.imgMap.get("map1");
 		}		
 		this.setX(Integer.parseInt(split[1])*48);
 		this.setY(Integer.parseInt(split[2])*48);
@@ -68,14 +68,14 @@ public class Map extends ElementObj{
 	}
 	
 	private static Properties pro =new Properties();	
-	private String setimage(String imageName,String map) {
+	private void setimage(String imageName,String map) {
 		String image = null;
 		ClassLoader classLoader = GameLoad.class.getClassLoader();
 		//先去map(num).pro里读取图片截取的位置和图片大小
 		InputStream maps = classLoader.getResourceAsStream("com/tedu/text/"+map+".pro");
 		if(maps == null) {
 			System.out.println("配置文件读取异常,请重新安装");
-			return null;
+			return;
 		}		
 		try {
 			pro.clear();
@@ -98,28 +98,6 @@ public class Map extends ElementObj{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//然后去GameData.pro里读取图片位置，并返回图片位置
-		maps = classLoader.getResourceAsStream("com/tedu/text/GameData.pro");
-		if(maps == null) {
-			System.out.println("配置文件读取异常,请重新安装");
-			return null;
-		}
-		try {
-			pro.clear();
-			pro.load(maps);
-			Enumeration<?> names = pro.propertyNames();
-			while(names.hasMoreElements()) {
-				String key=names.nextElement().toString();
-				if (key.equals(map)) {
-					image = pro.getProperty(key);
-					break;
-				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		return image;
 	}
 	
 	@Override

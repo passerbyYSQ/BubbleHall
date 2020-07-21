@@ -28,6 +28,7 @@ public class GameThread extends Thread {
 	
 	// 联动元素管理器
 	private ElementManager em;
+	
 	//暂停判定符
 	private static boolean isPause;
 	public GameThread() {
@@ -64,10 +65,15 @@ public class GameThread extends Thread {
 	 */
 	private void gameLoad() {
 //		System.out.println("gameLoad");
+		
+		// 加载图片资源。注意必须在加载地图、人物之前
+		GameLoad.loadImg();	
+		
+		// 加载游戏音乐（包括音效和背景音乐）
+		GameLoad.loadMusic();
+		
 		// 加载地图，10 可以设置成变量，切换关卡
 		GameLoad.MapLoad(1);  
-		// 加载图片到集合
-		GameLoad.loadImg();	
 		
 		/*
 		 * 加载玩家。可以考虑传参，来控制单人或双人
@@ -94,6 +100,8 @@ public class GameThread extends Thread {
 	 */ 
 	private long gameTime = 3L;
 	private void gameRun() {
+		// 开始循环播放背景音乐
+//		GameLoad.musicMap.get("bgm0").setLoop(true).play();
 		
 		// 预留扩展，true可以改为变量，用于控制关卡结束等
 		while (true) {

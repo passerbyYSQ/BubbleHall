@@ -25,11 +25,24 @@ public class GameLoad {
 
 //	图片集合  使用map来进行存储     枚举类型配合移动(扩展)
 	public static Map<String, ImageIcon> imgMap = new HashMap<>();
+	public static Map<String, MusicPlayer> musicMap = new HashMap<>();
+	
 
 //	public static Map<String, List<ImageIcon>> imgMaps;
 
 //	用户读取文件的类
 	private static Properties pro = new Properties();
+	
+	/**
+	 * 播放音乐
+	 * @param key
+	 */
+	public static void playMusic(String key) {
+		MusicPlayer musicPlayer = musicMap.get(key);
+		if (musicPlayer != null) {
+			musicPlayer.play();
+		}
+	}
 
 	/**
 	 * @说明 传入地图id有加载方法依据文件规则自动产生地图文件名称，加载文件
@@ -65,11 +78,10 @@ public class GameLoad {
 				}
 			}	
 
-			// 对地图List进行排序
+			// 对地图的List进行排序
 			Collections.sort(em.getElementsByKey(GameElement.MAPS));
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -78,7 +90,7 @@ public class GameLoad {
 	 * @说明 加载图片代码 加载图片 代码和图片之间差 一个 路径问题
 	 */
 	public static void loadImg() {// 可以带参数，因为不同的关也可能需要不一样的图片资源
-		String texturl = "com/tedu/text/GameData.pro";// 文件的命名可以更加有规律
+		String texturl = "com/tedu/text/ImageData.pro";// 文件的命名可以更加有规律
 		ClassLoader classLoader = GameLoad.class.getClassLoader();
 		InputStream texts = classLoader.getResourceAsStream(texturl);
 //		imgMap用于存放数据
@@ -92,6 +104,27 @@ public class GameLoad {
 				imgMap.put(o.toString(), new ImageIcon(url));
 			}
 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 加载游戏音乐，包括音效和背景音乐
+	 */
+	public static void loadMusic() {
+		String texturl = "com/tedu/text/MusicData.pro";
+		ClassLoader classLoader = GameLoad.class.getClassLoader();
+		InputStream texts = classLoader.getResourceAsStream(texturl);
+		// 由于pro是公用的，先清空上次数据
+		pro.clear();
+		try {
+			pro.load(texts);
+			Set<Object> set = pro.keySet();// 是一个set集合
+			for (Object o : set) {
+				String url = pro.getProperty(o.toString());
+				musicMap.put(o.toString(), new MusicPlayer(url));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
