@@ -16,6 +16,7 @@ import com.tedu.manager.GameLoad;
  * @create 2020年7月18日 上午10:46:32
  */
 public class Player extends ElementObj {
+	private int flat=1;
 	
 	/**
 	 * 4个方向状态的标识
@@ -190,6 +191,10 @@ public class Player extends ElementObj {
 	 */
 	@Override
 	protected void add() { 
+		// 死亡动画执行期间，禁止放泡泡
+		  if (dieAnimateStartTime != -1) {
+		   return;
+		  }
 		if(!this.pkType) { //如果是不发射状态，就直接return
 			return;
 		}
@@ -447,6 +452,11 @@ public class Player extends ElementObj {
 				dirFlag[curDir] = false;
 				correctPosition();
 			}
+			if (obj instanceof PaoPao&&flat==1) {
+				// 当前方向停止移动
+				dirFlag[curDir] = false;
+				correctPosition();
+			}
 		}
 		
 		return isCollided;
@@ -488,5 +498,13 @@ public class Player extends ElementObj {
 
 	public void setPower(int power) {
 		this.power = power;
+	}
+
+	public int getFlat() {
+		return flat;
+	}
+
+	public void setFlat(int flat) {
+		this.flat = flat;
 	}
 }

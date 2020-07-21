@@ -81,6 +81,7 @@ public class PaoPao extends ElementObj{
 			ElementObj element=new PaoPaoExplode().createElement(this.toString());
 			//装入到集合中
 			ElementManager.getManager().addElement(element,GameElement.EXPLODE);
+			GameLoad.playMusic("bomb");
 			//改变炸弹玩家已经放在炸弹数bubbleNum,显示爆炸效果，加入ExplodeBubble
 			List<ElementObj> list2 = ElementManager.getManager().getElementsByKey(GameElement.PLAYER);
 			for (int i = 0; i < list2.size(); i++) {
