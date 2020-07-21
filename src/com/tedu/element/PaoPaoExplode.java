@@ -2,11 +2,14 @@ package com.tedu.element;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 
+import com.tedu.manager.ElementManager;
+import com.tedu.manager.GameElement;
 import com.tedu.manager.GameLoad;
 
 /**
@@ -37,20 +40,20 @@ public class PaoPaoExplode extends ElementObj{
 					912, 623, 1000, 712,
 					null);
 			g.drawImage(imgUp.getImage(),
-					getX(), getY()-48*power, getX()+48  , getY(),
-					891, 0, 1014, 88+100*(power-1),
+					getX(), getY()-48*upstep, getX()+48  , getY(),
+					891, 0, 1014, 88+100*(upstep-1),
 					null);
 			g.drawImage(imgDown.getImage(),
-					getX(), getY()+48, getX()+48, getY()+48+48*power,
-					891,  1331-100*(power-1), 1022,1411,
+					getX(), getY()+48, getX()+48, getY()+48+48*downstep,
+					891,  1331-100*(downstep-1), 1022,1411,
 					null);
 			g.drawImage(imgLeft.getImage(),
-					getX()-48*power, getY(), getX(), getY()+48,
-					6, 603, 124+100*(power-1), 732,
+					getX()-48*leftstep, getY(), getX(), getY()+48,
+					6, 603, 124+100*(leftstep-1), 732,
 					null);
 			g.drawImage(imgRight.getImage(),
-					getX()+48, getY(), getX()+48+48*power, getY()+48,
-					1760-100*(power-1), 609, 1880, 731,
+					getX()+48, getY(), getX()+48+48*rightstep, getY()+48,
+					1760-100*(rightstep-1), 609, 1880, 731,
 					null);
 		
 		}
@@ -72,12 +75,68 @@ public class PaoPaoExplode extends ElementObj{
 			this.setIcon(icon);
 			this.setW(icon.getIconWidth());
 			this.setH(icon.getIconHeight());
-			
+			upstep=power;	
+			downstep=power;
+			leftstep=power;
+			rightstep=power;
+			setstep();  //计算爆炸步数
 			return this;
 		}
 		
+	private void setstep() {
+		List<ElementObj> list = ElementManager.getManager().getElementsByKey(GameElement.MAPS);
+		for (int j = power - 1; j >= 0; j--) {
+			{ 
+				for (int i = 0; i < list.size(); i++) {
+					Map map = (Map) list.get(i);   //取出所有地图类
+					if (map.getType() == 2) { // 取出不可摧毁地图
+						Rectangle step = new Rectangle(getX(), getY() - 48 * (j + 1), 48, 48);// 计算上方爆炸步数
+						if (step.intersects(map.getRectangle())) {
+							upstep=j;
+							break;
+						}
+					}
 
+				}
+				for (int i = 0; i < list.size(); i++) {
+					Map map = (Map) list.get(i);   //取出所有地图类
+					if (map.getType() == 2) { // 取出不可摧毁地图
+						Rectangle step = new Rectangle(getX(), getY() + 48 * (j + 1), 48, 48);// 计算下方爆炸步数
+						if (step.intersects(map.getRectangle())) {
+							downstep=j;
+							break;
+						}
+					}
 
+				}
+				for (int i = 0; i < list.size(); i++) {
+					Map map = (Map) list.get(i);   //取出所有地图类
+					if (map.getType() == 2) { // 取出不可摧毁地图
+						Rectangle step = new Rectangle(getX() - 48 * (j + 1), getY(), 48, 48);// 计算左方爆炸步数
+						if (step.intersects(map.getRectangle())) {
+							leftstep=j;
+							break;
+						}
+					}
+
+				}
+				for (int i = 0; i < list.size(); i++) {
+					Map map = (Map) list.get(i);   //取出所有地图类
+					if (map.getType() == 2) { // 取出不可摧毁地图
+						Rectangle step = new Rectangle(getX() + 48 * (j + 1), getY(), 48, 48);// 计算右方爆炸步数
+						if (step.intersects(map.getRectangle())) {
+							rightstep=j;
+							break;
+						}
+					}
+
+				}
+
+			}
+
+		}
+
+	}
 
 			//使用计时器，2.5秒改变Alive状态
 			@Override
@@ -107,20 +166,27 @@ public class PaoPaoExplode extends ElementObj{
 			public boolean collide(ElementObj obj) {
 				if (obj instanceof Map) { 
 					Map map = (Map) obj;
-					if (map.getType() == 0) { // 地板不碰撞
+					if (map.getType() == 0||map.getType() == 2) { // 地板和不可破坏区域不碰撞
 						return false;
 					}
+					if (map.getType() == 1) { // 碰撞可破坏区域
+						Rectangle explodeColumn = new Rectangle(getX(), getY() - 48 * upstep, 48, 48 * (upstep+downstep + 1));// 水泡爆炸十字纵向
+						Rectangle explodeRow = new Rectangle(getX() - 48 * leftstep, getY(), 48 * (leftstep+rightstep + 1), 48);// 水泡爆炸十字横向
+						boolean column = explodeColumn.intersects(obj.getRectangle());
+						boolean row = explodeRow.intersects(obj.getRectangle());
+						return (column || row);
+					}
+				
+					
 				}
 				
-				//if (obj instanceof Player) { 
-					Rectangle explodeColumn = 
-							new Rectangle(getX(), getY()-48*power, 48, 48*(3+power));//水泡爆炸十字纵向
-					Rectangle explodeRow =  
-							new Rectangle(getX()-48*power, getY(), 48*(3+power),48);//水泡爆炸十字横向
-					boolean column = explodeColumn.intersects(obj.getRectangle());
-					boolean row = explodeRow.intersects(obj.getRectangle());
-					return (column||row);
-				//}
+				// if (obj instanceof Player) { 48*(3+power)
+				Rectangle explodeColumn = new Rectangle(getX(), getY() - 48 * upstep, 48, 48 * (upstep+downstep + 1));// 水泡爆炸十字纵向
+				Rectangle explodeRow = new Rectangle(getX() - 48 * leftstep, getY(), 48 * (leftstep+rightstep + 1), 48);// 水泡爆炸十字横向
+				boolean column = explodeColumn.intersects(obj.getRectangle());
+				boolean row = explodeRow.intersects(obj.getRectangle());
+				return (column || row);
+				// }
 				
 			
 				

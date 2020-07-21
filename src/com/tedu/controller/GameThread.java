@@ -116,7 +116,7 @@ public class GameThread extends Thread {
 				// 约定：第一个参数：碰撞的主动方；第二个参数：被碰撞的一方
 				elementsCollide(GameElement.PLAYER, GameElement.MAPS); // Player和障碍物
 				elementsCollide(GameElement.EXPLODE, GameElement.PLAYER); // 泡泡爆炸和Player
-	//			elementsCollide(GameElement.EXPLODE, GameElement.MAPS); // 泡泡爆炸和地图
+				elementsCollide(GameElement.EXPLODE, GameElement.MAPS); // 泡泡爆炸和地图
 				elementsCollide(GameElement.PLAYER, GameElement.TOOL);	// Player和道具
 				
 				gameTime++;
@@ -154,6 +154,17 @@ public class GameThread extends Thread {
 				}
 			}
 		}
+		// 泡泡爆炸和地图之间的碰撞设置
+		if (eleA == GameElement.EXPLODE && eleB == GameElement.MAPS) {
+			for (ElementObj g1 : listA) {
+				for (ElementObj g2 : listB) {
+					if (g1.collide(g2)) {
+						g2.setLive(false);
+						return;
+					}
+				}
+			}
+		}
 		for (ElementObj a : listA) {
 			for (ElementObj b : listB) {
 				if (a.collide(b)) {
@@ -178,6 +189,7 @@ public class GameThread extends Thread {
 				}	
 			}
 		}
+		
 	}
 	
 	public void moveAndUpdate(Map<GameElement, List<ElementObj>> all) {
