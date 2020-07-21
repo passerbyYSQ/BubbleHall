@@ -118,6 +118,7 @@ public class GameThread extends Thread {
 				elementsCollide(GameElement.EXPLODE, GameElement.PLAYER); // 泡泡爆炸和Player
 				elementsCollide(GameElement.EXPLODE, GameElement.MAPS); // 泡泡爆炸和地图
 				elementsCollide(GameElement.PLAYER, GameElement.TOOL);	// Player和道具
+				elementsCollide(GameElement.EXPLODE, GameElement.PAOPAO); // 泡泡爆炸和泡泡
 				
 				gameTime++;
 				
@@ -165,6 +166,17 @@ public class GameThread extends Thread {
 				}
 			}
 		}
+		// 泡泡爆炸和泡泡之间的碰撞设置
+				if (eleA == GameElement.EXPLODE && eleB == GameElement.PAOPAO) {
+					for (ElementObj g1 : listA) {
+						for (ElementObj g2 : listB) {
+							if (g1.collide(g2)) {
+								g2.setLive(false);
+								return;
+							}
+						}
+					}
+				}
 		for (ElementObj a : listA) {
 			for (ElementObj b : listB) {
 				if (a.collide(b)) {

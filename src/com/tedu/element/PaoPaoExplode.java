@@ -138,7 +138,7 @@ public class PaoPaoExplode extends ElementObj{
 
 	}
 
-			//使用计时器，2.5秒改变Alive状态
+			//使用计时器，0.5秒改变Alive状态
 			@Override
 			public void move() {
 				Timer timer = new Timer(true);

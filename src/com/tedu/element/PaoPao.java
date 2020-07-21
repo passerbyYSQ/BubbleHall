@@ -83,8 +83,14 @@ public class PaoPao extends ElementObj{
 			ElementManager.getManager().addElement(element,GameElement.EXPLODE);
 			//改变炸弹玩家已经放在炸弹数bubbleNum,显示爆炸效果，加入ExplodeBubble
 			List<ElementObj> list2 = ElementManager.getManager().getElementsByKey(GameElement.PLAYER);
-			Player player = (Player) list2.get(playerNum-1);
-			player.setBubbleNum(player.getBubbleNum()+1);
+			for (int i = 0; i < list2.size(); i++) {
+				Player player = (Player) list2.get(i);
+				
+				if (player.getPlayerNum()==this.playerNum) {
+					player.setBubbleNum(player.getBubbleNum()+1);
+				}
+			}
+			
 		
 			
 		}
