@@ -37,8 +37,8 @@ public class PaoPao extends ElementObj{
 		}
 		ImageIcon icon = GameLoad.imgMap.get("paopao");
 		this.setIcon(icon);
-		this.setW(icon.getIconWidth());
-		this.setH(icon.getIconHeight());
+		this.setW(48);
+		this.setH(48);
 		return this;
 	}
 

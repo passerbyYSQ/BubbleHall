@@ -17,6 +17,11 @@ import com.tedu.manager.GameLoad;
 public class PaoPaoExplode extends ElementObj{
 	private int power;
 	private int playerNum;
+	private int upstep;		//记录向各个方向爆炸可扩展的的格数
+	private int downstep;
+	private int leftstep;
+	private int rightstep;
+	
 	//爆炸四个方向及中心的图片
 			private static ImageIcon imgCenter = GameLoad.imgMap.get("ppexplode");
 			private static ImageIcon imgUp = GameLoad.imgMap.get("ppexplode");
@@ -67,10 +72,25 @@ public class PaoPaoExplode extends ElementObj{
 			this.setIcon(icon);
 			this.setW(icon.getIconWidth());
 			this.setH(icon.getIconHeight());
+			setstep();
 			return this;
 		}
 		
-		//使用计时器，2.5秒改变Alive状态
+		private void setstep() {
+			for (int i = 0; i < power; i++) {
+				Rectangle step= 
+						new Rectangle(getX(), getY()-48*(i+1), 48, 48);
+				if (step.intersects(r)) {
+					
+				}
+				
+			}
+			
+			
+		}
+
+
+			//使用计时器，2.5秒改变Alive状态
 			@Override
 			public void move() {
 				Timer timer = new Timer(true);
