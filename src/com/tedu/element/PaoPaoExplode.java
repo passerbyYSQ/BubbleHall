@@ -80,6 +80,7 @@ public class PaoPaoExplode extends ElementObj{
 			leftstep=power;
 			rightstep=power;
 			setstep();  //计算爆炸步数
+			setstep2();  //再次计算爆炸步数
 			return this;
 		}
 		
@@ -137,7 +138,90 @@ public class PaoPaoExplode extends ElementObj{
 		}
 
 	}
+	private void setstep2() {
+		List<ElementObj> list = ElementManager.getManager().getElementsByKey(GameElement.MAPS);
+		for (int j = 0; j < upstep; j++) {
+			int flat = 1;
+			for (int i = 0; i < list.size(); i++) {
+				Map map = (Map) list.get(i); // 取出所有地图类
+				if (map.getType() == 1) { // 取出可摧毁地图
+					Rectangle step = new Rectangle(getX(), getY() - 48 * (j + 1), 48, 48);// 计算上方爆炸步数
+					if (step.intersects(map.getRectangle())) {
+						upstep = j + 1;
+						flat = 0;
+						break;
+					}
+				}
 
+			}
+			if (flat != 1) {
+				break;
+			}
+
+		}
+		for (int j = 0; j < downstep; j++) {
+			int flat = 1;
+			for (int i = 0; i < list.size(); i++) {
+				Map map = (Map) list.get(i); // 取出所有地图类
+				if (map.getType() == 1) { // 取出可摧毁地图
+					Rectangle step = new Rectangle(getX(), getY() + 48 * (j + 1), 48, 48);// 计算下方爆炸步数
+					if (step.intersects(map.getRectangle())) {
+						downstep = j + 1;
+						flat = 0;
+						break;
+					}
+				}
+
+			}
+			if (flat != 1) {
+				break;
+			}
+
+		}
+		for (int j = 0; j < leftstep; j++) {
+			int flat = 1;
+			for (int i = 0; i < list.size(); i++) {
+				Map map = (Map) list.get(i); // 取出所有地图类
+				if (map.getType() == 1) { // 取出可摧毁地图
+					Rectangle step = new Rectangle(getX() - 48 * (j + 1), getY(), 48, 48);// 计算左方爆炸步数
+					if (step.intersects(map.getRectangle())) {
+						leftstep = j + 1;
+						flat = 0;
+						break;
+					}
+				}
+
+			}
+			if (flat != 1) {
+				break;
+			}
+
+		}
+		for (int j = 0; j < rightstep; j++) {
+			int flat = 1;
+			for (int i = 0; i < list.size(); i++) {
+				Map map = (Map) list.get(i); // 取出所有地图类
+				if (map.getType() == 1) { // 取出可摧毁地图
+					Rectangle step = new Rectangle(getX() + 48 * (j + 1), getY(), 48, 48);// 计算右方爆炸步数
+					if (step.intersects(map.getRectangle())) {
+						rightstep = j + 1;
+						flat = 0;
+						break;
+					}
+				}
+
+			}
+			if (flat != 1) {
+				break;
+			}
+
+		}
+
+}
+
+		
+
+	
 			//使用计时器，0.5秒改变Alive状态
 			@Override
 			public void move() {
