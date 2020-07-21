@@ -41,6 +41,8 @@ public class Player extends ElementObj {
 	private int bubbleNum=1;	//定义私有属性最大可放置泡泡个数
 	private int playerNum;		//玩家编号
 	private int power=1;		//炮弹威力
+	private int fclickedY=48;	//闪烁用，改变人物右下角坐标来实现闪烁功能
+	private boolean isBoom=false;//闪烁用，检测人物是否被炸
 	
 	/**
 	 * 用于图片的切割。
@@ -99,7 +101,7 @@ public class Player extends ElementObj {
 			g.drawImage(this.getIcon().getImage(), 
 					// Player在面板中显示的区域。一个Player占据一个格子的大小（48*48）
 					this.getX(), this.getY(),  // 左上角坐标
-					this.getX() + 48, this.getY() + 48,   // 右下角坐标
+					this.getX() + 48, this.getY() + fclickedY,   // 右下角坐标
 					// Player在图片素材中的位置区域
 					24 + (imgX*100), 34 + (imgY*100),  // 左上角坐标
 					74 + (imgX*100), 100 + (imgY*100),  // 右下角坐标
@@ -507,4 +509,21 @@ public class Player extends ElementObj {
 	public void setFlat(int flat) {
 		this.flat = flat;
 	}
+
+	public int getFclickedY() {
+		return fclickedY;
+	}
+
+	public void setFclickedY(int fclickedY) {
+		this.fclickedY = fclickedY;
+	}
+
+	public boolean isBoom() {
+		return isBoom;
+	}
+
+	public void setBoom(boolean isBoom) {
+		this.isBoom = isBoom;
+	}
+	
 }

@@ -110,7 +110,7 @@ public class GameThread extends Thread {
 			{
 				// 所有元素刷新移动
 				Map<GameElement, List<ElementObj>> all = em.getGameElements();
-				
+				fclicked();
 				moveAndUpdate(all);
 				
 				// 约定：第一个参数：碰撞的主动方；第二个参数：被碰撞的一方
@@ -199,6 +199,11 @@ public class GameThread extends Thread {
 					if (eleA.equals(GameElement.EXPLODE)
 							&& eleB.equals(GameElement.PLAYER)) {
 						b.die(gameTime);
+						if(b.isLive())
+						{
+							Player player=(Player)b;
+							player.setBoom(true);
+						}
 					}
 					
 					// 开始死亡动画
@@ -291,5 +296,35 @@ public class GameThread extends Thread {
 		
 	}
 	*/
-	
+	/**
+	 * 玩家被炸后闪烁
+	 */
+	private int fclickedTime = 0; //闪烁次数
+	private void fclicked()
+	{
+		List<ElementObj> playerList=ElementManager.getManager().getElementsByKey(GameElement.PLAYER);
+		for(ElementObj player:playerList)
+		{
+			Player player1=(Player)player;
+			if(player1.isBoom())
+			{
+				if(fclickedTime<48)
+				{
+					if(player1.getFclickedY()==48)
+					{
+						player1.setFclickedY(0);
+					}
+					else {
+						player1.setFclickedY(48);
+					}
+					fclickedTime++;
+				}
+				else {
+					fclickedTime=0;
+					player1.setBoom(false);
+				}
+				player1.model(gameTime);
+			}
+		}
+	}
 }
