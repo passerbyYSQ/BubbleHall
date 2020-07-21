@@ -104,12 +104,12 @@ public class Tool extends ElementObj{
 			{
 				if(player.collide(this))
 				{
-					if(this.name.equals("BubbleCopy"))
+					if(this.name.equals("GoldenCard"))
 					{
 						Player player1=(Player)player;
-						player1.setHp(player1.getHp()+100);
+						player1.setHp(player1.getHp()+1);
 					}
-					else if(this.name.equals("GoldenCard"))
+					else if(this.name.equals("BubbleCopy"))
 					{
 						Player player1=(Player)player;
 						player1.setBubbleNum(player1.getBubbleNum()+1);

@@ -146,10 +146,8 @@ public class GameThread extends Thread {
 			{
 				for(ElementObj g2:listB)
 				{
-					if(g1.collide(g2))
-					{
-						g2.setLive(false);
-						g2.die(gameTime);
+					if(g2.collide(g1))
+					{	
 						return ;
 					}
 				}
@@ -185,6 +183,11 @@ public class GameThread extends Thread {
 					if (eleA.equals(GameElement.EXPLODE)
 							&& eleB.equals(GameElement.PLAYER)) {
 						b.die(gameTime);
+						try {
+							sleep(500);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 					
 					// 开始死亡动画

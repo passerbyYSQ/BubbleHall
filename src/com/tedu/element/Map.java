@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+import com.tedu.manager.ElementManager;
+import com.tedu.manager.GameElement;
 import com.tedu.manager.GameLoad;
 
 /**
@@ -128,5 +131,28 @@ public class Map extends ElementObj{
 		return type;
 	}
 	
-
+	
+	@Override
+	public void die(long gametime) {
+		if(!this.isLive())
+		{
+			Random random=new Random();
+			int r=random.nextInt(100);
+			String str=this.toString(r);
+			if(r<=40&&r>0)
+			{
+				ElementObj obj=new Tool().createElement(str);
+				ElementManager.getManager().addElement(obj, GameElement.TOOL);
+				return;
+			}
+			else {
+				return ;
+			}
+		}
+	}
+	
+	public String toString(int r) {
+		String str="x:"+this.getX()+",y:"+this.getY()+",n:"+r;
+		return str;
+	}
 }
