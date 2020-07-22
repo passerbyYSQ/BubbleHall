@@ -50,15 +50,16 @@ public class GameMainJPanel extends JPanel implements Runnable {
 	private JButton runBtn;
 	private JButton overBtn;
 	
+	public static OverJPanel jp;
 	
-	public GameMainJPanel() {
-		init();
+	public GameMainJPanel(GameJFrame gj) {
+		init(gj);
 //		System.out.println(this.getLayout());
 //		System.out.println(this.getWidth());
 //		System.out.println(this.getHeight());
 	}
 	
-	protected void init() {
+	protected void init(GameJFrame gj) {
 		// 得到元素管理器的单例
 		em = ElementManager.getManager();
 
@@ -126,12 +127,15 @@ public class GameMainJPanel extends JPanel implements Runnable {
 			}
 		});
 		
+		jp = new OverJPanel(gj);
 		// 结束游戏的按钮的点击事件
 		overBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// ...
-
+				gj.setjPanel(jp);
+				gj.setThread(null, 1);
+				gj.start();
 				// 注意全局监听是作用于整个窗体，而并非面板
 				// 点击按钮后，焦点落在了按钮上，窗体需要重新获得焦点，按钮监听才会有效
 				GameStart.gj.requestFocus();

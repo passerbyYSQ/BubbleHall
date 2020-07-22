@@ -112,7 +112,10 @@ public class GameJFrame extends JFrame{
 		this.mouseListener = mouseListener;
 	}
 
-	public void setThread(Thread thread) {
+	public void setThread(Thread thread,int num) {
+		if(num == 1) {
+			this.thread.interrupt();
+		}
 		this.thread = thread;
 	}
 

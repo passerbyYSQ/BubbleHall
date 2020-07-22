@@ -8,3 +8,5 @@ ppexplode=image/ppExled.png
 single=image/rect1.png
 double=image/rect2.png
 ground=image/title.png
+over=image/Gameovers.png
+regame=image/rect4.png

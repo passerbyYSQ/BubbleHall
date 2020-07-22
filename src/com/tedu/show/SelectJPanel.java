@@ -54,7 +54,7 @@ public class SelectJPanel extends JPanel{
 		jb2.setBorderPainted(false);
 		jb2.setBounds(300, 300, 100,50);
 		
-		jp=new GameMainJPanel();		
+		jp=new GameMainJPanel(gj);		
 
 		jb1.addActionListener(new ActionListener() {
 //			实例化监听
@@ -66,7 +66,7 @@ public class SelectJPanel extends JPanel{
 //				注入
 				gj.setjPanel(jp);		
 				gj.setKeyListener(listener);
-				gj.setThread(th);
+				gj.setThread(th,0);
 				gj.start();
 			}
 		});
@@ -81,7 +81,7 @@ public class SelectJPanel extends JPanel{
 //				注入
 				gj.setjPanel(jp);		
 				gj.setKeyListener(listener);
-				gj.setThread(th);
+				gj.setThread(th,0);
 				gj.start();
 			}
 		});

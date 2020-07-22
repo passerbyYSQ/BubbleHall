@@ -86,7 +86,7 @@ public class MainJPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		ImageIcon icon = GameLoad.imgMap.get("ground");
-		g.drawImage(icon.getImage(), 0, 0, GameStart.jp2.getWidth(), GameStart.jp2.getHeight(),null);
+		g.drawImage(icon.getImage(), 0, 0, GameStart.jp.getWidth(), GameStart.jp.getHeight(),null);
 	}
 	
 }
