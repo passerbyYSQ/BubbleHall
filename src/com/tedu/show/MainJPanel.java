@@ -1,5 +1,7 @@
 package com.tedu.show;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -8,6 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -30,6 +34,7 @@ public class MainJPanel extends JPanel{
 	public static SelectJPanel jp;
 	
 	public MainJPanel(GameJFrame gj) {
+		
 		GameLoad.loadImg();
 		ImageIcon icon = GameLoad.imgMap.get("single");
 		ImageIcon icon2 = GameLoad.imgMap.get("double");
@@ -51,6 +56,17 @@ public class MainJPanel extends JPanel{
 //		GameListener listener = new GameListener();
 //		实例化主线程
 //		GameThread th = new GameThread();
+		
+		jb1.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Object[] options = { "确定" }; 
+				JOptionPane.showOptionDialog(null, "单人模式尚未开发，敬请期待", "提示", 
+				JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, 
+				null, options, null); 
+				
+			}
+		});
 		jb2.addActionListener(new ActionListener() {				
 			@Override
 			public void actionPerformed(ActionEvent e) {			
