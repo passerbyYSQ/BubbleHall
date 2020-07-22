@@ -91,8 +91,8 @@ public class GameThread extends Thread {
 		 * 最后一个参数用于记录玩家1号还是2号  阿灿
 		 * 
 		 */
-		GameLoad.loadPlayer("144,144,player1,37,38,39,40,17,1",
-				"144,144,player2,65,87,68,83,32,2");
+		GameLoad.loadPlayer("144,144,player1,37,38,39,40,10,1",
+				"528,480,player2,65,87,68,83,32,2");
 		
 //		GameLoad.loadPlayer("144,144,player1,37,38,39,40,17,1");
 		

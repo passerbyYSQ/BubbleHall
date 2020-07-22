@@ -38,7 +38,7 @@ public class Player extends ElementObj {
 	private int moveSpeed = 6;
 	
 	private int hp = 1; 		//定义私有属性血量（等价于有多少条命）
-	private int bubbleNum=2;	//定义私有属性最大可放置泡泡个数
+	private int bubbleNum=1;	//定义私有属性最大可放置泡泡个数
 	private int playerNum;		//玩家编号
 	private int power=1;		//炮弹威力
 	private int fclickedY=48;	//闪烁用，改变人物右下角坐标来实现闪烁功能
@@ -541,6 +541,10 @@ public class Player extends ElementObj {
 
 	public void setBoom(boolean isBoom) {
 		this.isBoom = isBoom;
+	}
+
+	public int getMoveSpeed() {
+		return moveSpeed;
 	}
 	
 }

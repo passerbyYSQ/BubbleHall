@@ -32,6 +32,14 @@ public class Tool extends ElementObj{
 					0+(num*32), 0, 
 					32+(num*32), 48, null);
 		}
+		else if(this.name.equals("RedGhost"))
+		{
+			g.drawImage(this.getIcon().getImage(),
+					this.getX(), this.getY(),
+					this.getX()+32, this.getY()+44, 
+					0+(num*32), 4, 
+					32+(num*32), 48, null);
+		}
 		else
 		{
 			return ;
@@ -54,14 +62,17 @@ public class Tool extends ElementObj{
 //				通过随机数设置是否掉落道具以及掉落道具的种类
 				case "n":
 					int n=Integer.parseInt(split2[1]);
-					if(n>0&&n<=13){//1-13掉落泡泡
+					if(n>0&&n<=10){//1-10掉落泡泡
 						this.name="BubbleCopy";
 					}
-					else if(n>13&&n<=26){//14-26掉落金卡
+					else if(n>10&&n<=20){//11-20掉落金卡
 						this.name="GoldenCard";
 					}
-					else if(n>26&&n<=40){//27-40掉落药水
+					else if(n>20&&n<=30){//21-30掉落药水
 						this.name="MedicineBottle";
+					}
+					else if(n>30&&n<=40){//31-40掉落红鬼头
+						this.name="RedGhost";
 					}
 					String url="image/Characters/"+this.name+".png";
 					ImageIcon icon=new ImageIcon(url);				//通过道具名字设置道具路径
@@ -118,6 +129,11 @@ public class Tool extends ElementObj{
 					{
 						Player player1=(Player)player;
 						player1.setPower(player1.getPower()+1);
+					}
+					else if(this.name.equals("RedGhost"))
+					{
+						Player player1=(Player)player;
+						player1.setMoveSpeed(player1.getMoveSpeed()+1);
 					}
 				}
 			}
