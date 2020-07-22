@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import com.tedu.controller.GameListener;
 import com.tedu.controller.GameThread;
 
-import sun.nio.cs.ext.MacRoman;
-
 /**
  * 游戏窗体
  * 主要功能
@@ -46,13 +44,13 @@ public class GameJFrame extends JFrame{
 	
 	public static GameJFrame gj = new GameJFrame();
 	//主面板
-	public static MainJPanel jp1 = new MainJPanel();
+	public static MainJPanel jp1;
 	//挑选地图面板
-	public static SelectJPanel jp2 = new SelectJPanel();
+	public static SelectJPanel jp2;
 	//游戏面板
-	public static GameMainJPanel jp3 = new GameMainJPanel();
+	public static GameMainJPanel jp3;
 	//结束面板
-	public static OverJPanel jp4 = new OverJPanel();
+	public static OverJPanel jp4;
 	
 	public GameJFrame() {
 		init();
@@ -78,10 +76,12 @@ public class GameJFrame extends JFrame{
 	//设置面板
 	public static void setJPanel(String Name) {
 		if (Name.equals("MainJPanel")) {
+			jp1 = new MainJPanel();
 			gj.setjPanel(jp1);
 			gj.start();
 		}
 		if (Name.equals("SelectJPanel")) {
+			jp2 = new SelectJPanel();
 			gj.setjPanel(jp2);
 			gj.start();
 		}
@@ -90,6 +90,7 @@ public class GameJFrame extends JFrame{
 			GameListener listener = new GameListener();
 //			实例化主线程
 			GameThread th = new GameThread(SelectJPanel.map);
+			jp3 = new GameMainJPanel();
 			gj.setjPanel(jp3);
 			gj.setKeyListener(listener);
 			gj.setThread(th, 0);	
@@ -97,6 +98,7 @@ public class GameJFrame extends JFrame{
 			gj.setFocusable(true);
 		}
 		if (Name.equals("OverJPanel")) {
+			jp4 = new OverJPanel();
 			gj.setjPanel(jp4);
 			gj.setThread(null, 1);
 			gj.start();
@@ -120,6 +122,7 @@ public class GameJFrame extends JFrame{
 			this.addMouseListener(mouseListener);
 		}
 		if (thread != null) {
+			System.out.println();
 			thread.start();
 		}
 		// 界面刷新，显示窗体

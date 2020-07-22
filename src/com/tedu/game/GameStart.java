@@ -8,9 +8,9 @@ import com.tedu.show.MainJPanel;
 
 public class GameStart {
 	
-	public static GameJFrame gj;
+//	public static GameJFrame gj;
 	
-	public static MainJPanel jp;
+//	public static MainJPanel jp;
 
 	/**
 	 * 程序的唯一入口

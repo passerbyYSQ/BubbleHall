@@ -14,6 +14,7 @@ import com.tedu.manager.ElementManager;
 import com.tedu.manager.GameElement;
 import com.tedu.manager.GameLoad;
 import com.tedu.manager.MusicPlayer;
+import com.tedu.show.GameJFrame;
 
 /**
  * 游戏的主线程，用于控制游戏的加载
@@ -38,8 +39,12 @@ public class GameThread extends Thread {
 	
 	private int vectory=1;//设置是否胜利，0代表胜利
 	
+	// 游戏进程是否结束
+	private boolean isOver = false;
+	
 	//暂停判定符
-	private static boolean isPause;
+	private boolean isPause;
+	
 	public GameThread(int map) {
 		this.map = map;
 		em = ElementManager.getManager();
@@ -50,7 +55,7 @@ public class GameThread extends Thread {
 		//super.run();
 		
 		// 扩展，可以将true变为一个变量用于游戏进程控制（例如：暂停）
-		while (true) {
+//		while (true) {
 			// 游戏开始前：读进度条，加载游戏资源（场景）
 			gameLoad();
 			
@@ -60,13 +65,13 @@ public class GameThread extends Thread {
 			// 游戏场景结束时：游戏资源回收
 			gameOver();
 			
-			try {
-				// 由于继承了Thread类，可以直接调用sleep
-				sleep(50);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+//			try {
+//				// 由于继承了Thread类，可以直接调用sleep
+//				sleep(50);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 	}
 	
@@ -112,12 +117,13 @@ public class GameThread extends Thread {
 	 */ 
 	private long gameTime = 3L;
 	private void gameRun() {
+		
 		// 开始循环播放背景音乐。暂时放这里，可能会改位置
 		bgm = GameLoad.musicMap.get("bgm0").setLoop(true);
 //		bgm.play();
 		
 		// 预留扩展，true可以改为变量，用于控制关卡结束等
-		while (true) {
+		while (!isOver) {
 //			System.out.println("gameRun");
 			if(!isPause)
 			{
@@ -289,18 +295,20 @@ public class GameThread extends Thread {
 	 * 游戏切换关卡
 	 */
 	private void gameOver() {
-	
+		// 情况元素管理器里面的所有对象
+		ElementManager.getManager().clearAll();
+		GameJFrame.setJPanel("OverJPanel");
 	}
 
 	/**
 	 * 游戏暂停状态设置
 	 * @return
 	 */
-	public static boolean isPause() {
+	public boolean isPause() {
 		return isPause;
 	}
 
-	public static void setPause(boolean pause) {
+	public void setPause(boolean pause) {
 		isPause = pause;
 	}
 
@@ -365,4 +373,14 @@ public class GameThread extends Thread {
 	public MusicPlayer getBgm() {
 		return bgm;
 	}
+
+	public boolean getIsOver() {
+		return isOver;
+	}
+
+	public void setIsOver(boolean isOver) {
+		this.isOver = isOver;
+	}
+	
+	
 }

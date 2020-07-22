@@ -81,7 +81,8 @@ public class GameMainJPanel extends JPanel implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 获取当前游戏线程的BGM
-				MusicPlayer bgm = ((GameThread) GameStart.gj.getThread()).getBgm();
+				MusicPlayer bgm = ((GameThread) GameJFrame.gj.getThread()).getBgm();
+				
 				if (bgmStatus) { // 如果已经开了，就关掉
 					bgm.over();
 					bgmBtn.setText("开启BGM");
@@ -93,7 +94,7 @@ public class GameMainJPanel extends JPanel implements Runnable {
 				
 				// 注意全局监听是作用于整个窗体，而并非面板
 				// 点击按钮后，焦点落在了按钮上，窗体需要重新获得焦点，按钮监听才会有效
-				GameStart.gj.requestFocus();
+				GameJFrame.gj.requestFocus();
 //				GameMainJPanel.this.requestFocus();
 			}
 		});
@@ -102,11 +103,11 @@ public class GameMainJPanel extends JPanel implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 获取游戏线程
-//				GameThread thread = (GameThread) GameStart.gj.getThread();
+				GameThread thread = (GameThread) GameJFrame.gj.getThread();
 				// 获取当前游戏线程的BGM
-				MusicPlayer bgm = ((GameThread) GameJFrame.gj.getThread()).getBgm();
-				if (GameThread.isPause()) { // 如果已经暂停，则继续游戏
-					GameThread.setPause(false);
+				MusicPlayer bgm = thread.getBgm();
+				if (thread.isPause()) { // 如果已经暂停，则继续游戏
+					thread.setPause(false);
 					runBtn.setText("暂停游戏");
 					if (bgmStatus) { // 如果已经开了BGM，就关掉
 						bgm.play();
@@ -114,7 +115,7 @@ public class GameMainJPanel extends JPanel implements Runnable {
 					GameJFrame.gj.requestFocus();
 					
 				} else {
-					GameThread.setPause(true);
+					thread.setPause(true);
 					runBtn.setText("继续游戏");
 					if (bgmStatus) {
 						bgm.over();
@@ -132,16 +133,22 @@ public class GameMainJPanel extends JPanel implements Runnable {
 		overBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// ...
-				ElementManager em = ElementManager.getManager();
+				GameThread th = (GameThread) GameJFrame.gj.getThread();
+				MusicPlayer bgm = th.getBgm();
+				if (bgmStatus) {
+					bgm.over();
+					bgmBtn.setText("开启BGM");
+				}
 				
-				GameJFrame.setJPanel("OverJPanel");
+				th.setIsOver(true);
+				
+//				GameJFrame.setJPanel("OverJPanel");
 //				gj.setjPanel(jp);
 //				gj.setThread(null, 1);
 //				gj.start();
 				// 注意全局监听是作用于整个窗体，而并非面板
 				// 点击按钮后，焦点落在了按钮上，窗体需要重新获得焦点，按钮监听才会有效
-//				GameStart.gj.requestFocus();
+				GameJFrame.gj.requestFocus();
 			}
 		});
 		
@@ -205,5 +212,9 @@ public class GameMainJPanel extends JPanel implements Runnable {
 			}
 		}
 	}
+
+
+	
+	
 	
 }

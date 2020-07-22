@@ -9,6 +9,7 @@ import java.util.Set;
 import com.tedu.element.ElementObj;
 import com.tedu.manager.ElementManager;
 import com.tedu.manager.GameElement;
+import com.tedu.show.GameJFrame;
 
 /**
  * 监听的实现类，用于监听用户的操作
@@ -70,7 +71,8 @@ public class GameListener implements KeyListener {
 		if(key==80)
 		{
 			isPause=!isPause;
-			GameThread.setPause(isPause);
+			((GameThread) GameJFrame.gj.getThread()).setPause(isPause);
+//			GameThread.setPause(isPause);
 		}
 	}
 

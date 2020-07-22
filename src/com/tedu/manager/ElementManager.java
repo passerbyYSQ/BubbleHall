@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.tedu.element.ElementObj;
 
@@ -97,5 +98,17 @@ public class ElementManager {
 		
 		// 道具、子弹、爆炸效果...
 	}
+	
+	/**
+	 * 清空元素管理器里面的对象资源
+	 */
+	public void clearAll() {
+		Set<GameElement> keySet = gameElements.keySet();
+		for (GameElement ge : keySet) {
+			gameElements.get(ge).clear();
+		}
+	}
+	
+	
 
 }
