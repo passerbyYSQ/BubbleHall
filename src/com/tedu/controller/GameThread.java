@@ -12,6 +12,7 @@ import com.tedu.element.Player;
 import com.tedu.manager.ElementManager;
 import com.tedu.manager.GameElement;
 import com.tedu.manager.GameLoad;
+import com.tedu.manager.MusicPlayer;
 
 /**
  * 游戏的主线程，用于控制游戏的加载
@@ -28,6 +29,8 @@ public class GameThread extends Thread {
 	
 	// 联动元素管理器
 	private ElementManager em;
+	// 游戏进行时的背景音乐
+	private MusicPlayer bgm;
 	
 	//选择地图
 	private int map = 0; //默认值为0，即未选择地图
@@ -106,8 +109,9 @@ public class GameThread extends Thread {
 	 */ 
 	private long gameTime = 3L;
 	private void gameRun() {
-		// 开始循环播放背景音乐
-//		GameLoad.musicMap.get("bgm0").setLoop(true).play();
+		// 开始循环播放背景音乐。暂时放这里，可能会改位置
+		bgm = GameLoad.musicMap.get("bgm0").setLoop(true);
+		bgm.play();
 		
 		// 预留扩展，true可以改为变量，用于控制关卡结束等
 		while (true) {

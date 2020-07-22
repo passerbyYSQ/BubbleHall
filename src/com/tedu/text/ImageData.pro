@@ -7,4 +7,4 @@ paopao=image/Characters/Bubbles5.png
 ppexplode=image/ppExled.png
 single=image/rect1.png
 double=image/rect2.png
-ground=image/Titles.png
+ground=image/title.png

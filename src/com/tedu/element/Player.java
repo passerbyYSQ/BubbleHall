@@ -2,7 +2,6 @@ package com.tedu.element;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -10,6 +9,7 @@ import com.tedu.game.GameStart;
 import com.tedu.manager.ElementManager;
 import com.tedu.manager.GameElement;
 import com.tedu.manager.GameLoad;
+import com.tedu.show.SelectJPanel;
 
 /**
  * 玩家角色类
@@ -17,7 +17,6 @@ import com.tedu.manager.GameLoad;
  * @create 2020年7月18日 上午10:46:32
  */
 public class Player extends ElementObj {
-	private int flat=1;
 	
 	/**
 	 * 4个方向状态的标识
@@ -38,8 +37,8 @@ public class Player extends ElementObj {
 	// Player移动速度
 	private int moveSpeed = 6;
 	
-	private int hp = 1 ;		//定义私有属性血量（等价于有多少条命）
-	private int bubbleNum=1;	//定义私有属性最大可放置泡泡个数
+	private int hp = 1; 		//定义私有属性血量（等价于有多少条命）
+	private int bubbleNum=2;	//定义私有属性最大可放置泡泡个数
 	private int playerNum;		//玩家编号
 	private int power=1;		//炮弹威力
 	private int fclickedY=48;	//闪烁用，改变人物右下角坐标来实现闪烁功能
@@ -178,12 +177,12 @@ public class Player extends ElementObj {
 		// 地图大小：720*624
 		// 最后需要将面板大小精准控制为地图大小
 		// 右
-		if (dirFlag[2] && this.getX() < GameStart.jp.getWidth() - 48) {
+		if (dirFlag[2] && this.getX() < SelectJPanel.jp.getWidth() - 48) {
 			this.setX(this.getX() + moveSpeed);
 		}
 		
 		// 下
-		if (dirFlag[3] && this.getY() < GameStart.jp.getHeight() - 48 - 4) {
+		if (dirFlag[3] && this.getY() < SelectJPanel.jp.getHeight() - 48 - 4) {
 			// 减4是为了修正误差，误差原因未知
 			this.setY(this.getY() + moveSpeed);
 		}
@@ -214,7 +213,7 @@ public class Player extends ElementObj {
 		//装入到集合中
 		ElementManager.getManager().addElement(element,GameElement.PAOPAO);
 		setBubbleNum(getBubbleNum()-1);	
-		
+
 	}	
 	/**
 	 * 传入放置泡泡所需参数
@@ -439,6 +438,7 @@ public class Player extends ElementObj {
 	 */
 	@Override
 	public boolean collide(ElementObj obj) {
+//		System.out.println(obj);
 		if (obj instanceof Map) { 
 			Map map = (Map) obj;
 			if (map.getType() == 0) { // 地板不碰撞
@@ -448,25 +448,35 @@ public class Player extends ElementObj {
 		
 		// 是否发生碰撞
 		boolean isCollided = super.collide(obj);
-		List<ElementObj> list = ElementManager.getManager().getElementsByKey(GameElement.PAOPAO);
-		if (list.size()>1) {
-			flat=0;
-			if (Math.abs(obj.getX()-this.getX())>=40||Math.abs(obj.getY()-this.getY())>=40) {
-				flat=1;
-				
+//		System.out.println(isCollided);
+		// 玩家碰到的是墙（不能穿过）
+		if (obj instanceof Map) {
+			if (isCollided) {
+				// 当前方向停止移动
+				dirFlag[curDir] = false;
+				correctPosition();
 			}
 		}
-		if (isCollided) {
-			// 玩家碰到的是墙（不能穿过）
-			if (obj instanceof Map) {
-				// 当前方向停止移动
-				dirFlag[curDir] = false;
-				correctPosition();
-			}
-			if (obj instanceof PaoPao&&flat==1) {
-				// 当前方向停止移动
-				dirFlag[curDir] = false;
-				correctPosition();
+		
+		// 
+		if (obj instanceof PaoPao) {
+//			System.out.println(isCollided);
+			PaoPao paopao = (PaoPao) obj;
+			if (isCollided) {
+				if (paopao.isFirst()) { // 第一次
+//						System.out.println("11");
+					return false; // 纠正，为false
+				} else {
+//					if (!paopao.isFirst()) {
+//						System.out.println("22");
+					dirFlag[curDir] = false;
+					correctPosition();
+					return true; 
+				}
+			} else {
+				if (paopao.getPlayerNum() == this.playerNum) {
+					paopao.setFirst(false);
+				}
 			}
 		}
 		
@@ -509,14 +519,6 @@ public class Player extends ElementObj {
 
 	public void setPower(int power) {
 		this.power = power;
-	}
-
-	public int getFlat() {
-		return flat;
-	}
-
-	public void setFlat(int flat) {
-		this.flat = flat;
 	}
 
 	public int getFclickedY() {
