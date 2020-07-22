@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import com.tedu.element.ElementObj;
 import com.tedu.element.PaoPao;
@@ -34,6 +35,8 @@ public class GameThread extends Thread {
 	
 	//选择地图
 	private int map = 0; //默认值为0，即未选择地图
+	
+	private int vectory=1;//设置是否胜利，0代表胜利
 	
 	//暂停判定符
 	private static boolean isPause;
@@ -131,6 +134,30 @@ public class GameThread extends Thread {
 				elementsCollide(GameElement.EXPLODE, GameElement.PAOPAO); // 泡泡爆炸和泡泡
 				elementsCollide(GameElement.PLAYER, GameElement.PAOPAO); // player和泡泡
 				gameTime++;
+				
+				List<ElementObj> playerList=ElementManager.getManager().getElementsByKey(GameElement.PLAYER);
+				for(ElementObj player:playerList)
+				{
+					Player player1=(Player)player;
+					if(!player1.isLive()) {
+						vectory--;
+						if (vectory == 0) {
+							if(player1.getPlayerNum() == 1 ) {
+								Object[] options = { "确定" }; 
+								JOptionPane.showOptionDialog(null, "小黄鸭胜利，请按结束游戏",
+										"胜利", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+										null, options, null); 		
+							}
+							if(player1.getPlayerNum() == 2 ) {
+								Object[] options = { "确定" }; 
+								JOptionPane.showOptionDialog(null, "小红人胜利，请按结束游戏",
+										"胜利", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+										null, options, null); 		
+							}
+							vectory=1;
+						}				
+					}
+				}
 				
 			}
 			try {

@@ -30,6 +30,7 @@ public class MainJPanel extends JPanel{
 	
 	public JButton jb1;
 	public JButton jb2;
+	public JButton jb3;
 	
 //	public static GameMainJPanel jp;
 	public static SelectJPanel jp;
@@ -39,6 +40,7 @@ public class MainJPanel extends JPanel{
 		GameLoad.loadImg();
 		ImageIcon icon = GameLoad.imgMap.get("single");
 		ImageIcon icon2 = GameLoad.imgMap.get("double");
+		ImageIcon icon3 = GameLoad.imgMap.get("shuoming");
 		this.setLayout(null);
 		
 		jb1 = new JButton(icon);
@@ -50,6 +52,11 @@ public class MainJPanel extends JPanel{
 		jb2.setBorderPainted(false);
 		jb2.setContentAreaFilled(false);
 		jb2.setBounds(250, 300, icon2.getIconWidth(), icon2.getIconHeight());
+		
+		jb3 = new JButton(icon3);
+		jb3.setBorderPainted(false);
+		jb3.setContentAreaFilled(false);
+		jb3.setBounds(250, 400, icon2.getIconWidth(), icon2.getIconHeight());
 		
 		jp = new SelectJPanel(gj);
 //		jp = new GameMainJPanel();
@@ -63,9 +70,8 @@ public class MainJPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				Object[] options = { "确定" }; 
 				JOptionPane.showOptionDialog(null, "单人模式尚未开发，敬请期待", "提示", 
-				JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, 
-				null, options, null); 
-				
+				JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+				null, options, null); 			
 			}
 		});
 		jb2.addActionListener(new ActionListener() {				
@@ -78,8 +84,23 @@ public class MainJPanel extends JPanel{
 				gj.start();
 			}
 		});
+		jb3.addActionListener(new ActionListener() {				
+			@Override
+			public void actionPerformed(ActionEvent e) {			
+				Object[] options = { "确定" }; 
+				JOptionPane.showOptionDialog(null, "<html><body><tr>player1 方向键为wasd 泡泡为空格</tr>"
+						+ "<tr>player2 方向键为上下左右 泡泡为enter</tr>"
+						+ "<tr>金卡：加一条命</tr>"
+						+ "<tr>鬼头：加移动速度</tr>"
+						+ "<tr>泡泡：加泡泡的放置数量</tr>"	
+						+ "<tr>药水：加泡泡的威力</tr></body></html>", "游戏说明", 
+				JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+				null, options, null); 
+			}
+		});
 		this.add(jb1);
 		this.add(jb2);
+		this.add(jb3);
 //		gj.setFocusable(true);
 	}	
 	

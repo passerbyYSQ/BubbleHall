@@ -18,20 +18,18 @@ public class OverJPanel extends JPanel{
 	public static MainJPanel jp;
 	
 	public OverJPanel(GameJFrame gj) {
-		this.setLayout(null);
-		jp = GameStart.jp;
-		ImageIcon icon = GameLoad.imgMap.get("regame");
-		jb = new JButton(icon);
-		jb.setBorderPainted(false);
-		jb.setContentAreaFilled(false);
-		jb.setBounds(250, 200, icon.getIconWidth(), icon.getIconHeight());
+//		this.setLayout(null);
+//		jp = GameStart.jp;
+//		ImageIcon icon = GameLoad.imgMap.get("regame");
+//		jb = new JButton(icon);
+//		jb.setBorderPainted(false);
+//		jb.setContentAreaFilled(false);
+//		jb.setBounds(250, 200, icon.getIconWidth(), icon.getIconHeight());
 //		jb.addActionListener(new ActionListener() {				
 //			@Override
 //			public void actionPerformed(ActionEvent e) {			
 ////				注入
 //				gj.setjPanel(jp);		
-////				gj.setKeyListener(listener);
-////				gj.setThread(th);
 //				gj.start();
 //			}
 //		});

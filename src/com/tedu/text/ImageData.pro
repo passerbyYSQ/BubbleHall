@@ -10,3 +10,4 @@ double=image/rect2.png
 ground=image/title.png
 over=image/Gameovers.png
 regame=image/rect4.png
+shuoming=image/rect3.png
