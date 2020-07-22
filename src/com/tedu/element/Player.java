@@ -127,6 +127,7 @@ public class Player extends ElementObj {
 	protected void updateImage(long gameTime) {
 		// 动画结束判定
 		if (dieAnimateStartTime != -1 && gameTime - dieAnimateStartTime > 70) {
+			// 死亡动画进行期间，人物不算死亡
 			// 当死亡动画结束，将该Player的live置为False
 			this.setLive(false);
 			return;
@@ -458,7 +459,12 @@ public class Player extends ElementObj {
 			}
 		}
 		
-		// 
+		/*
+		 * Player与泡泡的碰撞检测
+		 * Player对于自己放的泡泡，放完后可以出去，但是不能再穿过
+		 * 对于其他人放的泡泡，一律不能穿过
+		 * 该碰撞检测，借助PaoPao类中的isFirst字段 ，一起来判断
+		 */
 		if (obj instanceof PaoPao) {
 //			System.out.println(isCollided);
 			PaoPao paopao = (PaoPao) obj;
