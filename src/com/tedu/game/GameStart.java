@@ -16,19 +16,20 @@ public class GameStart {
 	 * 程序的唯一入口
 	 */
 	public static void main(String[] args) {
-		gj = new GameJFrame();
+		GameJFrame.setJPanel("MainJPanel");
+//		gj = new GameJFrame();
 		/** 实例化面板，注入到jframe中 */
 //		jp = new GameMainJPanel();
-		jp = new MainJPanel(gj);
+//		jp = new MainJPanel(gj);
 //		实例化监听
 //		GameListener listener = new GameListener();
 //		实例化主线程
 //		GameThread th = new GameThread();
 //		注入
-		gj.setjPanel(jp);
+//		gj.setjPanel(jp);
 //		gj.setKeyListener(listener);
 //		gj.setThread(th);
-		gj.start();
+//		gj.start();
 
 	}
 

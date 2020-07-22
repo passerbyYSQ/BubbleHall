@@ -15,31 +15,32 @@ public class OverJPanel extends JPanel{
 
 	public JButton jb;
 	
-	public static MainJPanel jp;
+//	public static MainJPanel jp;
 	
-	public OverJPanel(GameJFrame gj) {
-//		this.setLayout(null);
+	public OverJPanel() {
+		this.setLayout(null);
 //		jp = GameStart.jp;
-//		ImageIcon icon = GameLoad.imgMap.get("regame");
-//		jb = new JButton(icon);
-//		jb.setBorderPainted(false);
-//		jb.setContentAreaFilled(false);
-//		jb.setBounds(250, 200, icon.getIconWidth(), icon.getIconHeight());
-//		jb.addActionListener(new ActionListener() {				
-//			@Override
-//			public void actionPerformed(ActionEvent e) {			
-////				注入
+		ImageIcon icon = GameLoad.imgMap.get("regame");
+		jb = new JButton(icon);
+		jb.setBorderPainted(false);
+		jb.setContentAreaFilled(false);
+		jb.setBounds(250, 200, icon.getIconWidth(), icon.getIconHeight());
+		jb.addActionListener(new ActionListener() {				
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				GameJFrame.setJPanel("MainJPanel");
+//				注入
 //				gj.setjPanel(jp);		
 //				gj.start();
-//			}
-//		});
-//		this.add(jb);
+			}
+		});
+		this.add(jb);
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		ImageIcon icon = GameLoad.imgMap.get("over");
-		g.drawImage(icon.getImage(), 0, 0, MainJPanel.jp.getWidth(), MainJPanel.jp.getHeight(),null);
+		g.drawImage(icon.getImage(), 0, 0, GameJFrame.jp4.getWidth(), GameJFrame.jp4.getHeight(),null);
 	}
 	
 }

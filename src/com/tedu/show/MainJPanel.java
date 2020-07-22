@@ -33,9 +33,9 @@ public class MainJPanel extends JPanel{
 	public JButton jb3;
 	
 //	public static GameMainJPanel jp;
-	public static SelectJPanel jp;
+//	public static SelectJPanel jp;
 	
-	public MainJPanel(GameJFrame gj) {
+	public MainJPanel() {
 		
 		GameLoad.loadImg();
 		ImageIcon icon = GameLoad.imgMap.get("single");
@@ -58,7 +58,7 @@ public class MainJPanel extends JPanel{
 		jb3.setContentAreaFilled(false);
 		jb3.setBounds(250, 400, icon2.getIconWidth(), icon2.getIconHeight());
 		
-		jp = new SelectJPanel(gj);
+//		jp = new SelectJPanel(gj);
 //		jp = new GameMainJPanel();
 //		实例化监听
 //		GameListener listener = new GameListener();
@@ -76,12 +76,13 @@ public class MainJPanel extends JPanel{
 		});
 		jb2.addActionListener(new ActionListener() {				
 			@Override
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {	
+				GameJFrame.setJPanel("SelectJPanel");
 //				注入
-				gj.setjPanel(jp);		
+//				gj.setjPanel(jp);		
 //				gj.setKeyListener(listener);
 //				gj.setThread(th);
-				gj.start();
+//				gj.start();
 			}
 		});
 		jb3.addActionListener(new ActionListener() {				
@@ -107,7 +108,7 @@ public class MainJPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		ImageIcon icon = GameLoad.imgMap.get("ground");
-		g.drawImage(icon.getImage(), 0, 0, GameStart.jp.getWidth(), GameStart.jp.getHeight(),null);
+		g.drawImage(icon.getImage(), 0, 0, GameJFrame.jp1.getWidth(), GameJFrame.jp1.getHeight(),null);
 	}
 	
 }

@@ -9,6 +9,7 @@ import com.tedu.game.GameStart;
 import com.tedu.manager.ElementManager;
 import com.tedu.manager.GameElement;
 import com.tedu.manager.GameLoad;
+import com.tedu.show.GameJFrame;
 import com.tedu.show.SelectJPanel;
 
 /**
@@ -178,12 +179,12 @@ public class Player extends ElementObj {
 		// 地图大小：720*624
 		// 最后需要将面板大小精准控制为地图大小
 		// 右
-		if (dirFlag[2] && this.getX() < SelectJPanel.jp.getWidth() - 48) {
+		if (dirFlag[2] && this.getX() < GameJFrame.jp3.getWidth() - 48) {
 			this.setX(this.getX() + moveSpeed);
 		}
 		
 		// 下
-		if (dirFlag[3] && this.getY() < SelectJPanel.jp.getHeight() - 48 - 4) {
+		if (dirFlag[3] && this.getY() < GameJFrame.jp3.getHeight() - 48 - 4) {
 			// 减4是为了修正误差，误差原因未知
 			this.setY(this.getY() + moveSpeed);
 		}

@@ -29,9 +29,11 @@ public class SelectJPanel extends JPanel{
 	
 	public JLabel jl;
 	
-	public static GameMainJPanel jp;
+	public static int map = 0;//选择关卡
 	
-	public SelectJPanel(GameJFrame gj) {
+//	public static GameMainJPanel jp;
+	
+	public SelectJPanel() {
 		
 		this.setLayout(null);
 		
@@ -54,20 +56,22 @@ public class SelectJPanel extends JPanel{
 		jb2.setBorderPainted(false);
 		jb2.setBounds(300, 300, 100,50);
 		
-		jp=new GameMainJPanel(gj);		
+//		jp=new GameMainJPanel(gj);		
 
 		jb1.addActionListener(new ActionListener() {
 //			实例化监听
-			GameListener listener = new GameListener();
+//			GameListener listener = new GameListener();
 //			实例化主线程
-			GameThread th = new GameThread(1);
+//			GameThread th = new GameThread(1);
 			@Override
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {	
+				map = 1;
+				GameJFrame.setJPanel("GameMainJPanel");
 //				注入
-				gj.setjPanel(jp);		
-				gj.setKeyListener(listener);
-				gj.setThread(th,0);
-				gj.start();
+//				gj.setjPanel(jp);		
+//				gj.setKeyListener(listener);
+//				gj.setThread(th,0);
+//				gj.start();
 			}
 		});
 		
@@ -77,24 +81,26 @@ public class SelectJPanel extends JPanel{
 //			实例化主线程
 			GameThread th = new GameThread(2);
 			@Override
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
+				map = 2;
+				GameJFrame.setJPanel("GameMainJPanel");
 //				注入
-				gj.setjPanel(jp);		
-				gj.setKeyListener(listener);
-				gj.setThread(th,0);
-				gj.start();
+//				gj.setjPanel(jp);		
+//				gj.setKeyListener(listener);
+//				gj.setThread(th,0);
+//				gj.start();
 			}
 		});
 		this.add(jl);
 		this.add(jb1);
 		this.add(jb2);
-		gj.setFocusable(true);
+//		gj.setFocusable(true);
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		ImageIcon icon = GameLoad.imgMap.get("ground");
-		g.drawImage(icon.getImage(), 0, 0, MainJPanel.jp.getWidth(), MainJPanel.jp.getHeight(),null);
+		g.drawImage(icon.getImage(), 0, 0, GameJFrame.jp2.getWidth(), GameJFrame.jp2.getHeight(),null);
 	}
 
 }

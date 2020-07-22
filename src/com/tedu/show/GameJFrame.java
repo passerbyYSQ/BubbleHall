@@ -8,6 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.tedu.controller.GameListener;
+import com.tedu.controller.GameThread;
+
+import sun.nio.cs.ext.MacRoman;
+
 /**
  * 游戏窗体
  * 主要功能
@@ -39,6 +44,16 @@ public class GameJFrame extends JFrame{
 	// 游戏主线程
 	private Thread thread = null;
 	
+	public static GameJFrame gj = new GameJFrame();
+	//主面板
+	public static MainJPanel jp1 = new MainJPanel();
+	//挑选地图面板
+	public static SelectJPanel jp2 = new SelectJPanel();
+	//游戏面板
+	public static GameMainJPanel jp3 = new GameMainJPanel();
+	//结束面板
+	public static OverJPanel jp4 = new OverJPanel();
+	
 	public GameJFrame() {
 		init();
 	}
@@ -58,6 +73,36 @@ public class GameJFrame extends JFrame{
 	// 窗体布局
 	public void addButton() {
 		
+	}
+	
+	//设置面板
+	public static void setJPanel(String Name) {
+		if (Name.equals("MainJPanel")) {
+			gj.setjPanel(jp1);
+			gj.start();
+		}
+		if (Name.equals("SelectJPanel")) {
+			gj.setjPanel(jp2);
+			gj.start();
+		}
+		if (Name.equals("GameMainJPanel")) {
+//			实例化监听
+			GameListener listener = new GameListener();
+//			实例化主线程
+			GameThread th = new GameThread(SelectJPanel.map);
+			gj.setjPanel(jp3);
+			gj.setKeyListener(listener);
+			gj.setThread(th, 0);	
+			gj.start();
+			gj.setFocusable(true);
+		}
+		if (Name.equals("OverJPanel")) {
+			gj.setjPanel(jp4);
+			gj.setThread(null, 1);
+			gj.start();
+		}
+		gj.setVisible(false);
+		gj.setVisible(true);
 	}
 	
 	// 窗体启动方法
