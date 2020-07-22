@@ -18,6 +18,7 @@ import com.tedu.manager.GameLoad;
 
 /**
  * @说明 主页
+ * 单人双人选择
  * @author ligouzi
  *
  */

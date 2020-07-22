@@ -42,6 +42,8 @@ public class MusicPlayer {
 	// FloatControl.Type.MASTER_GAIN的值(可用于调节音量)
 	private float newVolumn = 7;
 	
+	private PlayThread playThread;
+	
 //	public static void main(String[] args) {
 //		try {
 ////			MusicPlayer player = new MusicPlayer("F:\\初级软件实训\\音效\\爆炸.wav");放泡泡.mp3
@@ -70,7 +72,7 @@ public class MusicPlayer {
 	 * 播放音乐
 	 */
 	public void play() {
-		PlayThread playThread = new PlayThread();
+		playThread = new PlayThread();
 		playThread.start();
 	}
 	
@@ -79,6 +81,9 @@ public class MusicPlayer {
 	 */
 	public void over() {
 		isPlaying = false;
+		if (playThread != null) {
+			playThread = null;
+		}
 	}
 	
 	/**
@@ -108,8 +113,9 @@ public class MusicPlayer {
 	
 		@Override
 		public void run() {
+			isPlaying = true;
 			do {
-				isPlaying = true;
+//				isPlaying = true;
 				
 				SourceDataLine sourceDataLine = null;
 				BufferedInputStream bufIn = null;
@@ -140,7 +146,6 @@ public class MusicPlayer {
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
-					isPlaying = false;
 					
 					if (sourceDataLine != null) {
 						sourceDataLine.drain(); 
@@ -157,7 +162,7 @@ public class MusicPlayer {
 						e.printStackTrace();
 					}
 				}
-			} while (isLoop);
+			} while (isPlaying && isLoop);
 		}
 	}
 	

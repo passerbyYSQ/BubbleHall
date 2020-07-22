@@ -111,7 +111,7 @@ public class GameThread extends Thread {
 	private void gameRun() {
 		// 开始循环播放背景音乐。暂时放这里，可能会改位置
 		bgm = GameLoad.musicMap.get("bgm0").setLoop(true);
-		bgm.play();
+//		bgm.play();
 		
 		// 预留扩展，true可以改为变量，用于控制关卡结束等
 		while (true) {
@@ -269,11 +269,11 @@ public class GameThread extends Thread {
 	 * 游戏暂停状态设置
 	 * @return
 	 */
-	static boolean isPause() {
+	public static boolean isPause() {
 		return isPause;
 	}
 
-	static void setPause(boolean pause) {
+	public static void setPause(boolean pause) {
 		isPause = pause;
 	}
 
@@ -333,5 +333,9 @@ public class GameThread extends Thread {
 				player1.model(gameTime);
 			}
 		}
+	}
+
+	public MusicPlayer getBgm() {
+		return bgm;
 	}
 }

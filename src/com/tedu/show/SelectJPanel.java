@@ -13,6 +13,12 @@ import com.tedu.controller.GameThread;
 import com.tedu.game.GameStart;
 import com.tedu.manager.GameLoad;
 
+
+/**
+ * 选关卡面板
+ * @author passerbyYSQ
+ * @create 2020年7月22日 上午10:59:14
+ */
 public class SelectJPanel extends JPanel{
 	
 	public JButton jb1;

@@ -7,6 +7,8 @@ import com.tedu.show.GameMainJPanel;
 import com.tedu.show.MainJPanel;
 
 public class GameStart {
+	
+	public static GameJFrame gj;
 
 	public static GameMainJPanel jp;
 	
@@ -16,7 +18,7 @@ public class GameStart {
 	 * 程序的唯一入口
 	 */
 	public static void main(String[] args) {
-		GameJFrame gj = new GameJFrame();
+		gj = new GameJFrame();
 		/** 实例化面板，注入到jframe中 */
 //		jp = new GameMainJPanel();
 		jp2 = new MainJPanel(gj);

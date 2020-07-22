@@ -4,6 +4,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -114,4 +115,10 @@ public class GameJFrame extends JFrame{
 	public void setThread(Thread thread) {
 		this.thread = thread;
 	}
+
+	public Thread getThread() {
+		return thread;
+	}
+	
+	
 }
