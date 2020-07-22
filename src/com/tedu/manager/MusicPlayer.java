@@ -136,7 +136,7 @@ public class MusicPlayer {
 					}
 					
 					sourceDataLine.start();
-					byte[] buf = new byte[512];
+					byte[] buf = new byte[1024];
 //					System.out.println(audioIn.available());
 					int len = -1;
 					while (isPlaying && (len = audioIn.read(buf)) != -1) {

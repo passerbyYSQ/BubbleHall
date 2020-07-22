@@ -110,7 +110,9 @@ public class GameThread extends Thread {
 	private long gameTime = 3L;
 	private void gameRun() {
 		// 开始循环播放背景音乐。暂时放这里，可能会改位置
-		bgm = GameLoad.musicMap.get("bgm0").setLoop(true);
+		bgm = GameLoad.musicMap.get("ArmorHero_ToVictory")
+				.setVolumn(-12) // 调节音量大小
+				.setLoop(true); // 设置循环播放
 //		bgm.play();
 		
 		// 预留扩展，true可以改为变量，用于控制关卡结束等
