@@ -150,15 +150,15 @@ public class GameThread extends Thread {
 						if (vectory == 0) {
 							if(player1.getPlayerNum() == 1 ) {
 								Object[] options = { "确定" }; 
-								JOptionPane.showOptionDialog(null, "小黄鸭胜利，请按结束游戏",
-										"胜利", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-										null, options, null); 		
+								JOptionPane.showMessageDialog(null, 
+										"小黄鸭胜利，请按结束游戏", "提示", JOptionPane.INFORMATION_MESSAGE);
+								isOver = true;
 							}
 							if(player1.getPlayerNum() == 2 ) {
 								Object[] options = { "确定" }; 
-								JOptionPane.showOptionDialog(null, "小红人胜利，请按结束游戏",
-										"胜利", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-										null, options, null); 		
+								JOptionPane.showMessageDialog(null, 
+										"小红人胜利，请按结束游戏", "提示", JOptionPane.INFORMATION_MESSAGE);
+								isOver = true;
 							}
 							vectory=1;
 						}				

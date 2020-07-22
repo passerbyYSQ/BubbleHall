@@ -161,9 +161,9 @@ public class GameJFrame extends JFrame{
 	}
 
 	public void setThread(Thread thread,int num) {
-		if(num == 1) {
-			this.thread.interrupt();
-		}
+//		if(num == 1) {
+//			this.thread.interrupt();
+//		}
 		this.thread = thread;
 	}
 
