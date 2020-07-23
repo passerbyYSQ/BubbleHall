@@ -61,7 +61,7 @@ public class GameJFrame extends JFrame{
 		// 设置窗体大小
 		this.setSize(GameX, GameY);
 		// 设置窗体标题
-		this.setTitle("测试游戏"); // 放到配置文件
+		this.setTitle("泡泡堂"); // 放到配置文件
 		// 窗体关闭方式：关闭窗体时，同时终止程序
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// 窗体居中显示
